@@ -660,7 +660,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 230707087}
         m_TargetAssemblyTypeName: GameQuit, Assembly-CSharp
         m_MethodName: GameExit
         m_Mode: 1
@@ -880,6 +880,8 @@ GameObject:
   - component: {fileID: 230707084}
   - component: {fileID: 230707083}
   - component: {fileID: 230707086}
+  - component: {fileID: 230707087}
+  - component: {fileID: 230707088}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -949,6 +951,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a89c215e4ea6d6e48a03012baee2cd96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &230707087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230707082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d245c3fa161a3947861dd37eaeb6087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &230707088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230707082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beead277df2232e4b8ba0eac0d26bd30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToSpawn: {fileID: 1463514147828147824, guid: 120167318400f4643830df5d09abbb4a, type: 3}
+  xrOrigin: {fileID: 90336738}
 --- !u!1 &261660697
 GameObject:
   m_ObjectHideFlags: 0
