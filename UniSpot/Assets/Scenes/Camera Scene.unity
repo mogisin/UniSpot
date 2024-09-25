@@ -361,6 +361,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3189049252521688168, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865175816681756139, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865175816681756139, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1263641147}
+    - target: {fileID: 4865175816681756139, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadMainScene
+      objectReference: {fileID: 0}
     - target: {fileID: 6661991338567726698, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_Name
       value: Camera
@@ -594,6 +610,7 @@ GameObject:
   - component: {fileID: 1263641146}
   - component: {fileID: 1263641145}
   - component: {fileID: 1263641144}
+  - component: {fileID: 1263641147}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -651,6 +668,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1263641147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263641143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b42b39ffea5c62f46beda43a80317e89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1289141132
 GameObject:
   m_ObjectHideFlags: 0
