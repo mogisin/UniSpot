@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Message Sender</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .log {
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 200px;
+            overflow-y: scroll;
+            margin-bottom: 20px;
+        }
+        button {
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>WebSocket Message Sender</h1>
+    
+    <div class="log" id="log"></div>
+    
+    <button onclick="sendLocation()">Send Location</button>
+    <button onclick="captureMonster()">Capture Monster</button>
+    <button onclick="sendChatMessage()">Send Chat Message</button>
+    <button onclick="useItem()">Use Item</button>
+    <button onclick="logout()">Logout</button>
+    <button onclick="generateMonsters()">Generate Random Monsters</button>
+
+    <script>
+        // WebSocket 연결 설정
+        const socket = new WebSocket('ws://localhost:8000');
+        
+        // 로그 출력 함수
+        function logMessage(message) {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += `<p>${message}</p>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        // WebSocket 연결이 열리면 실행
+        socket.onopen = function() {
+            logMessage('WebSocket connection opened.');
+        };
+
+        // 서버로부터 메시지 수신
+        socket.onmessage = function(event) {
+            logMessage('Received from server: ' + event.data);
+        };
+
+        // WebSocket 연결이 닫힐 때
+        socket.onclose = function() {
+            logMessage('WebSocket connection closed.');
+        };
+
+        // WebSocket 에러 발생 시
+        socket.onerror = function(error) {
+            logMessage('WebSocket error: ' + error.message);
+        };
+
+        // 위치 정보 전송
+        function sendLocation() {
+            const message = {
+                type: 'location',
+                username: 'testUser',
+                latitude: 37.7749,
+                longitude: -122.4194 //추후 적용시 현재 위치 받아와야함
+            };
+            socket.send(JSON.stringify(message));
+            logMessage('Sent location: ' + JSON.stringify(message));
+        }
+
+        // 몬스터 포획 메시지 전송 (몬스터ID 하드코딩됨)
+        function captureMonster() {
+            const message = {
+                type: 'capture',
+                username: 'testUser',
+                monsterId: '66f3f517b27c2d2d4cbd9b7c'
+            };
+            socket.send(JSON.stringify(message));
+            logMessage('Sent capture request: ' + JSON.stringify(message));
+        }
+
+        // 채팅 메시지 전송
+        function sendChatMessage() {
+            const message = {
+                type: 'chat',
+                username: 'testUser',
+                content: 'Hello, this is a test message!'
+            };
+            socket.send(JSON.stringify(message));
+            logMessage('Sent chat message: ' + JSON.stringify(message));
+        }
+
+        // 아이템 사용 메시지 전송
+        function useItem() {
+            const message = {
+                type: 'use_item',
+                username: 'testUser',
+                itemId: 'item123',
+                target: 'monster123'
+            };
+            socket.send(JSON.stringify(message));
+            logMessage('Sent item use request: ' + JSON.stringify(message));
+        }
+
+        // 로그아웃 메시지 전송
+        function logout() {
+            const message = {
+                type: 'logout',
+                username: 'testUser'
+            };
+            socket.send(JSON.stringify(message));
+            logMessage('Sent logout request: ' + JSON.stringify(message));
+        }
+
+        // 랜덤 몬스터 생성 요청
+        function generateMonsters() {
+            const message = {
+                type: 'generate_monsters',
+                count: 1 // 생성할 몬스터 수
+            };
+            socket.send(JSON.stringify(message));
+            logMessage('Requested to generate random monsters: ' + JSON.stringify(message));
+        }
+
+    </script>
+
+</body>
+</html>
