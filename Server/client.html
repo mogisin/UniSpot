@@ -26,12 +26,15 @@
     <h1>WebSocket Message Sender</h1>
     
     <div class="log" id="log"></div>
-    
-    <button onclick="sendLocation()">Send Location</button>
-    <button onclick="captureMonster()">Capture Monster</button>
-    <button onclick="sendChatMessage()">Send Chat Message</button>
-    <button onclick="useItem()">Use Item</button>
-    <button onclick="logout()">Logout</button>
+
+    <!-- 학과별 위치 정보 전송 버튼 -->
+    <button onclick="sendLocation('소프트웨어융합대학')">Send Location for 소프트웨어융합대학</button>
+    <button onclick="sendLocation('전자정보대학')">Send Location for 전자정보대학</button>
+    <button onclick="sendLocation('응용과학대학')">Send Location for 응용과학대학</button>
+    <button onclick="sendLocation('체육대학')">Send Location for 체육대학</button>
+    <button onclick="sendLocation('공과대학')">Send Location for 공과대학</button>
+    <button onclick="sendLocation('예술디자인대학')">Send Location for 예술디자인대학</button>
+
     <button onclick="generateMonsters()">Generate Random Monsters</button>
 
     <script>
@@ -65,60 +68,29 @@
             logMessage('WebSocket error: ' + error.message);
         };
 
-        // 위치 정보 전송
-        function sendLocation() {
-            const message = {
-                type: 'location',
-                username: 'testUser',
-                latitude: 37.7749,
-                longitude: -122.4194 //추후 적용시 현재 위치 받아와야함
-            };
-            socket.send(JSON.stringify(message));
-            logMessage('Sent location: ' + JSON.stringify(message));
-        }
+        // 학과별 좌표 데이터
+        const departmentCoordinates = {
+            '소프트웨어융합대학': { latitude: 37.239782, longitude: 127.083313 },
+            '전자정보대학': { latitude: 37.239782, longitude: 127.083313 },
+            '응용과학대학': { latitude: 37.239782, longitude: 127.083313 },
+            '체육대학': { latitude: 37.244493, longitude: 127.080436 },
+            '공과대학': { latitude: 37.246468, longitude: 127.080844 },
+            '예술디자인대학': { latitude: 37.241709, longitude: 127.084441 }
+        };
 
-        // 몬스터 포획 메시지 전송 (몬스터ID 하드코딩됨)
-        function captureMonster() {
-            const message = {
-                type: 'capture',
-                username: 'testUser',
-                monsterId: '66f3f517b27c2d2d4cbd9b7c'
-            };
-            socket.send(JSON.stringify(message));
-            logMessage('Sent capture request: ' + JSON.stringify(message));
-        }
-
-        // 채팅 메시지 전송
-        function sendChatMessage() {
-            const message = {
-                type: 'chat',
-                username: 'testUser',
-                content: 'Hello, this is a test message!'
-            };
-            socket.send(JSON.stringify(message));
-            logMessage('Sent chat message: ' + JSON.stringify(message));
-        }
-
-        // 아이템 사용 메시지 전송
-        function useItem() {
-            const message = {
-                type: 'use_item',
-                username: 'testUser',
-                itemId: 'item123',
-                target: 'monster123'
-            };
-            socket.send(JSON.stringify(message));
-            logMessage('Sent item use request: ' + JSON.stringify(message));
-        }
-
-        // 로그아웃 메시지 전송
-        function logout() {
-            const message = {
-                type: 'logout',
-                username: 'testUser'
-            };
-            socket.send(JSON.stringify(message));
-            logMessage('Sent logout request: ' + JSON.stringify(message));
+        // 위치 정보 전송 함수
+        function sendLocation(department) {
+            const location = departmentCoordinates[department];
+            if (location) {
+                const message = {
+                    type: 'location',
+                    username: 'testUser',
+                    latitude: location.latitude,
+                    longitude: location.longitude
+                };
+                socket.send(JSON.stringify(message));
+                logMessage('Sent location for ' + department + ': ' + JSON.stringify(message));
+            }
         }
 
         // 랜덤 몬스터 생성 요청
