@@ -36,6 +36,11 @@ public class SceneManage : MonoBehaviour
         SceneManager.LoadScene("Main Scene");
     }
 
+    public void LoadSampleScene(string sceneName)
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+
     // Update is called once per frame
     private void OnSceneUnloaded(Scene scene)
     {
