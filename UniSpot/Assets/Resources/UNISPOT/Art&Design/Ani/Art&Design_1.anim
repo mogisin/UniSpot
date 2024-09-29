@@ -2856,16 +2856,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: 
+    functionName: ArtDesign_1_anim
     data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 10
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 8645504429318352872, guid: 7498ecf44c6e126429c6146821aaa0a0, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
