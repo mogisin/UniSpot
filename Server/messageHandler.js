@@ -25,7 +25,10 @@ async function handleMessage(ws, message) {
       // 유저의 위치 정보 업데이트
       let user = await User.findOne({ username });
       if (!user) {
-        user = new User({ username, location: { latitude, longitude } });
+        user = new User({ 
+          username,
+          money: 0, 
+          location: { latitude, longitude } });
         console.log('새로운 유저 생성:', user);
       } else {
         user.location.latitude = latitude;
@@ -57,7 +60,7 @@ async function handleMessage(ws, message) {
         monsters: nearbyMonsters
       }));
 
-    } else if (data.type === 'capture') {
+    } else if (data.type === 'capture') { //몬스터 잡았을 때
       const { username, monsterId } = data;
 
       // 몬스터 포획 처리
@@ -66,11 +69,16 @@ async function handleMessage(ws, message) {
         monster.captured = true;
         await monster.save();
         console.log('몬스터 포획 완료:', monster);
-
         // 유저의 몬스터 목록에 추가
+
+
         let user = await User.findOne({ username });
+        user.money += 100;
+        await user.save();
+
         user.monsters.push({ name: monster.name, capturedAt: new Date() });
         await user.save();
+
         console.log('유저 몬스터 목록 업데이트:', user);
 
         // 몬스터 포획 성공 메시지 전송
@@ -79,7 +87,65 @@ async function handleMessage(ws, message) {
           monster: monster.name
         }));
       }
+    } else if (data.type ==='get_all_monsters'){ //모든 몬스터 정보 받아오기
+      const allMonsters = await Monster.find({ captured: false });
+
+      const response ={
+        type:'get_all_monsters',
+        monsters:allMonsters
+      };
+      console.log(allMonsters)
+      ws.send(JSON.stringify(response))
     }
+
+    else if (data.type === 'delete_all') { //몬스터 모두 삭제
+      // 모든 몬스터 삭제
+      await Monster.deleteMany({});
+      console.log('All monsters deleted from the database.');
+  
+      // 모든 유저의 몬스터 목록 비우기
+      await User.updateMany({}, { $set: { monsters: [] } });
+      console.log('All users\' monster lists cleared.');
+  
+      // 클라이언트에 삭제 완료 메시지 전송
+      ws.send(JSON.stringify({
+          type: 'delete_all_success',
+          message: 'All monsters and user monster lists have been deleted.'
+      }));
+    }
+
+    else if (data.type === 'delete_monster') { //몬스터 하나 삭제
+          const { monsterId } = data;
+      
+          // 몬스터 삭제
+          const deletedMonster = await Monster.findByIdAndDelete(monsterId);
+          if (deletedMonster) {
+              // 모든 유저의 몬스터 목록에서 해당 몬스터 삭제
+              await User.updateMany(
+                  { "monsters.name": deletedMonster.name }, // 몬스터 이름으로 찾음
+                  { $pull: { monsters: { name: deletedMonster.name } } } // 몬스터 삭제
+              );
+              console.log(`Monster with ID ${monsterId} deleted from database and user data.`);
+      
+              // 클라이언트에 몬스터 삭제 메시지 전송
+              ws.send(JSON.stringify({
+                  type: 'delete_monster',
+                  monsterId: monsterId
+              }));
+          } else {
+              ws.send(JSON.stringify({
+                  type: 'error',
+                  message: `Monster with ID ${monsterId} not found.`
+              }));
+          }
+      }
+  
+  
+
+
+
+
+
   } catch (error) {
     console.error('Error processing message:', error);
   }

@@ -21,7 +21,7 @@ function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
   }
   
   // 랜덤 좌표 생성
-  function getRandomCoordinateWithinRadius(latitude, longitude, radiusInMeters = 30) {
+  function getRandomCoordinateWithinRadius(latitude, longitude, radiusInMeters = 50) {
     const earthRadiusInMeters = 6371000; // 지구 반지름 (미터)
   
     // 랜덤 거리와 방향 설정

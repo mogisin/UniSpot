@@ -36,7 +36,7 @@
     <button onclick="sendLocation('예술디자인대학')">Send Location for 예술디자인대학</button>
 
     <button onclick="generateMonsters()">Generate Random Monsters</button>
-
+    <button onclick="deleteMonsters()"> 몬스터 삭제하기</button>
     <script>
         // WebSocket 연결 설정
         const socket = new WebSocket('ws://localhost:8000');
@@ -102,6 +102,8 @@
             socket.send(JSON.stringify(message));
             logMessage('Requested to generate random monsters: ' + JSON.stringify(message));
         }
+
+        
 
     </script>
 

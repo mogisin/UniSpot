@@ -1,3 +1,6 @@
 node_modules
 package-lock.json
 .env
+client_map.html
+unityClient.cs
+index.html
