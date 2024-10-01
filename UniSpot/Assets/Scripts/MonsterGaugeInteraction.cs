@@ -14,6 +14,7 @@ public class MonsterGaugeInteraction : MonoBehaviour
     private bool isGaugeDecreasing = true; // 게이지 감소 상태 플래그
     private bool isCaptureFailed = false; // 포획 실패 상태 플래그
     private bool resultFailedActive = false; // Result_Failed 활성화 상태 플래그
+    private bool resultSuccessActive = false; // Result_Success 활성화 상태 플래그
 
     void Start()
     {
@@ -24,7 +25,7 @@ public class MonsterGaugeInteraction : MonoBehaviour
     void Update()
     {
         // 터치 입력 감지 (포획 실패 상태가 아닐 때만)
-        if (Input.GetMouseButtonDown(0) && !isCaptureFailed)
+        if (Input.GetMouseButtonDown(0) && !isCaptureFailed && !resultSuccessActive)
         {
             IncreaseGaugeFixedAmount();
         }
@@ -84,8 +85,9 @@ public class MonsterGaugeInteraction : MonoBehaviour
             // 게이지 감소 중지
             isGaugeDecreasing = false;
 
-            // Result_Success 활성화
+            // Result_Success 활성화 및 상태 플래그 설정
             resultSuccess.SetActive(true);
+            resultSuccessActive = true;
 
             // 5초 후에 메인 화면으로 이동
             StartCoroutine(GoToMainSceneAfterDelay(5f));
@@ -99,12 +101,17 @@ public class MonsterGaugeInteraction : MonoBehaviour
         SceneManager.LoadScene("Main Scene");
     }
 
-    // 터치로 Result_Failed 창이 비활성화되는 것을 방지
+    // 터치로 Result_Failed 또는 Result_Success 창이 비활성화되는 것을 방지
     void LateUpdate()
     {
-        if (resultFailedActive && resultFailed.activeSelf == false)
+        if (resultFailedActive && !resultFailed.activeSelf)
         {
             resultFailed.SetActive(true);
+        }
+
+        if (resultSuccessActive && !resultSuccess.activeSelf)
+        {
+            resultSuccess.SetActive(true);
         }
     }
 }
