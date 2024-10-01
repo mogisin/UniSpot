@@ -372,7 +372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3292655045831952935, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_FillAmount
-      value: 0.03
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4865175816681756139, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -1176,6 +1176,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4322249862011071660, guid: 084666abb357cd54dafe86d7ef410f6c, type: 3}
   m_PrefabInstance: {fileID: 1518831108}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1620940305 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9162401462296204453, guid: 084666abb357cd54dafe86d7ef410f6c, type: 3}
+  m_PrefabInstance: {fileID: 1518831108}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1717701267
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,9 +1213,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gaugeImage: {fileID: 551225670}
-  fillSpeed: 0.1
-  delayBeforeIncrease: 1
+  fixedIncreaseAmount: 0.025
+  fillDecreaseSpeed: 0.1
+  delayBeforeDecrease: 1
   resultSuccess: {fileID: 293603016}
+  resultFailed: {fileID: 1620940305}
 --- !u!114 &1717701269
 MonoBehaviour:
   m_ObjectHideFlags: 0

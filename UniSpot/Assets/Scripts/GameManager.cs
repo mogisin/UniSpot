@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public GameData gameData;
+    //public GameData gameData;
 
     // 플레이어 정보 및 게임 상태 관리 변수들
     public string playerID;
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     // 자원량 UI 업데이트
     public void UpdateResourceUI()
     {
-        resource.text = gameData.resourceValue.ToString();
+        resource.text = resourceValue.ToString();
     }
 
     // 씬 이동 함수
@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
     // 자원량 업데이트
     public void UpdateResource(int amount)
     {
-        gameData.resourceValue += amount; 
+        resourceValue += amount; 
         UpdateResourceUI();
     }
 
@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetString("PlayerID", playerID);
         PlayerPrefs.SetInt("IsZoneCaptured", isZoneCaptured ? 1 : 0);
         PlayerPrefs.SetFloat("Timer", timer);
-        PlayerPrefs.SetInt("ResourceValue", gameData.resourceValue);
+        PlayerPrefs.SetInt("ResourceValue", resourceValue);
 
         PlayerPrefs.Save();
     }
@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
         int occupationResourceValue = int.Parse(OccupationResource.text);
 
         // 현재 자원 값이 필요한 occupation resource 값보다 크거나 같은지 확인
-        if (gameData.resourceValue >= occupationResourceValue)
+        if (resourceValue >= occupationResourceValue)
         {
             // 자원량 감소를 일관성 있게 처리
             UpdateResource(-occupationResourceValue);
@@ -203,7 +203,7 @@ public class GameManager : MonoBehaviour
         UpdateTimerUI();
 
         // 자원 값 불러오기 (기본값: 1000)
-        gameData.resourceValue = PlayerPrefs.GetInt("ResourceValue", 1000);
+        resourceValue = PlayerPrefs.GetInt("ResourceValue", 1000);
         UpdateResourceUI(); // 자원 UI 업데이트
     }
 
