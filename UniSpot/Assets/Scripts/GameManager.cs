@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public GameData gameData;
+
     // 플레이어 정보 및 게임 상태 관리 변수들
     public string playerID;
     public bool isZoneCaptured;
@@ -18,9 +20,11 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI timerTextMesh;    // TextMeshPro를 통해 타이머 UI 표시
     public GameObject occupationOff; // 점령 여부 확인할 Bt_Occupation 내의 Off 요소
     public Text textSpotInfo; // 스팟의 상태
-    public TextMeshProUGUI resource; // 자원량
+    public TextMeshProUGUI resource; // 자원량 표시를 위한 요소
     public Text OccupationResource; // 스팟 점령에 필요한 자원량
     public GameObject OccupationResourceInfo; // 스팟 점령 가능 여부 정보
+
+    public int resourceValue; // 씬 간에 공유되는 현재 자원량
 
     private void Awake()
     {
@@ -29,6 +33,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);  // 씬 전환 시에도 파괴되지 않음
+
+
         }
         else
         {
@@ -38,34 +44,63 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
+        LoadGameData();
+
         // 플레이어 ID 기본 값 설정 (빈 값일 경우 "User Name")
-        playerID = playerIDTextMesh.text;
-        if (string.IsNullOrEmpty(playerID))
-        {
-            playerID = "User Name";
-            playerIDTextMesh.text = playerID;  // TextMeshPro에 기본 값 반영
-        }
+        playerID = PlayerPrefs.GetString("PlayerID", "User Name");
+        playerIDTextMesh.text = playerID;
+
+        // 자원량 초기화
+        UpdateResourceUI();
 
         // 점령 여부 초기화
-        CheckZoneCaptured();
+        isZoneCaptured = PlayerPrefs.GetInt("IsZoneCaptured", 0) == 1;
+        occupationOff.SetActive(!isZoneCaptured);  // 점령 여부에 따라 Off 요소의 상태 조정
 
         // 타이머 초기화 (00:00)
-        ResetTimer();
+        timer = PlayerPrefs.GetFloat("Timer", 0f);
+        UpdateTimerUI();
+    }
+
+    // 자원량 UI 업데이트
+    public void UpdateResourceUI()
+    {
+        resource.text = gameData.resourceValue.ToString();
     }
 
     // 씬 이동 함수
     public void LoadCameraScene()
     {
+        SaveGameData();
         SceneManager.LoadScene("Camera Scene");
     }
     public void LoadMainScene()
     {
+        SaveGameData();
         SceneManager.LoadScene("Main Scene");
     }
 
     public void LoadSampleScene()
     {
         SceneManager.LoadScene("SampleScene");
+    }
+
+    // 자원량 업데이트
+    public void UpdateResource(int amount)
+    {
+        gameData.resourceValue += amount; 
+        UpdateResourceUI();
+    }
+
+    // PlayerPrefs에 자원량 저장
+    public void SaveGameData()
+    {
+        PlayerPrefs.SetString("PlayerID", playerID);
+        PlayerPrefs.SetInt("IsZoneCaptured", isZoneCaptured ? 1 : 0);
+        PlayerPrefs.SetFloat("Timer", timer);
+        PlayerPrefs.SetInt("ResourceValue", gameData.resourceValue);
+
+        PlayerPrefs.Save();
     }
 
     // 점령 여부 체크
@@ -77,27 +112,28 @@ public class GameManager : MonoBehaviour
 
     public void CaptureZone()
     {
-        // Parse the resource and occupation resource values from their text components
-        int resourceValue = int.Parse(resource.text); // Assuming the resource text is purely numeric
+        /*// resource와 occupation resource의 텍스트 컴포넌트에서 값을 파싱
+        int currentResourceValue = int.Parse(resource.text); // Assuming the resource text is purely numeric
         int occupationResourceValue = int.Parse(OccupationResource.text); // Assuming the occupation resource text is purely numeric
+        */
+        int occupationResourceValue = int.Parse(OccupationResource.text);
 
-        // Check if the resource value is greater than or equal to the required occupation resource
-        if (resourceValue >= occupationResourceValue)
+        // 현재 자원 값이 필요한 occupation resource 값보다 크거나 같은지 확인
+        if (gameData.resourceValue >= occupationResourceValue)
         {
-            // Deduct the occupation resource value from the resource value
-            resourceValue -= occupationResourceValue;
-            resource.text = resourceValue.ToString(); // Update the resource text to reflect the new value
+            // 자원량 감소를 일관성 있게 처리
+            UpdateResource(-occupationResourceValue);
 
-            // Disable the occupation resource information
+            // occupation resource 정보를 비활성화
             OccupationResourceInfo.SetActive(false);
 
-            // Enable the occupation off GameObject to indicate the zone is now occupied
+            // 점령 확인을 위한 occupation off GameObject 활성화
             occupationOff.SetActive(true);
 
-            // Set the zone captured status to true
+            // 점령 상태 변경
             isZoneCaptured = true;
 
-            // Optionally, log the capture action
+            // 로그
             Debug.Log("Zone has been successfully captured.");
         }
         else
@@ -131,24 +167,14 @@ public class GameManager : MonoBehaviour
     // 타이머 업데이트
     private void Update()
     {
-        if (timer > 0)
+        if (timerActive && timer > 0)
         {
             timer -= Time.deltaTime;
             UpdateTimerUI();
 
-            // 타이머가 끝나면 00:00으로 초기화
             if (timer <= 0)
             {
-                ResetTimer();
-            }
-        }
-
-        if (timerActive && timer > 0)
-        {
-            timer -= Time.deltaTime;
-
-            if (timer <= 0)
-            {
+                timerActive = false;
                 TimerEnded();
             }
         }
@@ -161,18 +187,6 @@ public class GameManager : MonoBehaviour
         timer = 0f;
     }
 
-    // 플레이어 데이터 저장 및 불러오기
-    public void SaveGameData()
-    {
-        PlayerPrefs.SetString("PlayerID", playerID);
-        PlayerPrefs.SetInt("IsZoneCaptured", isZoneCaptured ? 1 : 0);
-        PlayerPrefs.SetFloat("Timer", timer);
-
-        // 플레이어 ID 저장
-        PlayerPrefs.SetString("PlayerID", playerIDTextMesh.text);
-
-        PlayerPrefs.Save();
-    }
 
     public void LoadGameData()
     {
@@ -187,6 +201,10 @@ public class GameManager : MonoBehaviour
         // 타이머 값 불러오기 (기본값: 0초)
         timer = PlayerPrefs.GetFloat("Timer", 0f);
         UpdateTimerUI();
+
+        // 자원 값 불러오기 (기본값: 1000)
+        gameData.resourceValue = PlayerPrefs.GetInt("ResourceValue", 1000);
+        UpdateResourceUI(); // 자원 UI 업데이트
     }
 
     // 타이머 기능 구체화
