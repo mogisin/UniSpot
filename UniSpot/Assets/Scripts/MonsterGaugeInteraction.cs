@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MonsterGaugeInteraction : MonoBehaviour
@@ -6,6 +7,7 @@ public class MonsterGaugeInteraction : MonoBehaviour
     public Image gaugeImage; // Gauge_Frame의 Image 컴포넌트
     public float fillSpeed = 0.5f; // 게이지 증가 속도
     public float delayBeforeIncrease = 1f; // 게이지 증가 전 대기 시간
+    public GameObject resultSuccess; // Result_Success 오브젝트
 
     void Start()
     {
@@ -35,5 +37,14 @@ public class MonsterGaugeInteraction : MonoBehaviour
         }
 
         Debug.Log("게이지 최대치에 도달!");
+
+        // 게이지가 최대치에 도달했을 때 Result_Success를 활성화
+        resultSuccess.SetActive(true);
+
+        // 5초 후에 메인 화면으로 이동
+        yield return new WaitForSeconds(5f);
+
+        // 메인 화면으로 이동
+        SceneManager.LoadScene("Main Scene");
     }
 }

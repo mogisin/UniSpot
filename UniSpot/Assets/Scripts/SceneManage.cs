@@ -9,16 +9,16 @@ public class SceneManage : MonoBehaviour
 {
     
 
-    public void LoadCameraScene(string sceneName)
+    public void LoadCameraScene()
     {
         SceneManager.LoadScene("Camera Scene");
     }
-    public void LoadMainScene(string sceneName)
+    public void LoadMainScene()
     {
         SceneManager.LoadScene("Main Scene");
     }
 
-    public void LoadSampleScene(string sceneName)
+    public void LoadSampleScene()
     {
         SceneManager.LoadScene("SampleScene");
     }
