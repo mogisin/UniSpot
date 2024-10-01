@@ -7,25 +7,7 @@ using UnityEngine.SceneManagement; // 씬 관련 기능을 사용하기 위해 필요
 
 public class SceneManage : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        var eventSystems = FindObjectsOfType<EventSystem>();
-        if (eventSystems.Length > 1)
-        {
-            for (int i = 1; i < eventSystems.Length; i++)
-            {
-                Destroy(eventSystems[i].gameObject);
-            }
-        }
-    }
-
-    private void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
-    }
+    
 
     public void LoadCameraScene(string sceneName)
     {

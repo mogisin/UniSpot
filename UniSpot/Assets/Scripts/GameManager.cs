@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro; // TextMeshPro 사용을 위한 네임스페이스
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement; // 씬 관련 기능을 사용하기 위해 필요
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +17,10 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI playerIDTextMesh; // TextMeshPro를 통해 플레이어 ID를 입력 받음
     public TextMeshProUGUI timerTextMesh;    // TextMeshPro를 통해 타이머 UI 표시
     public GameObject occupationOff; // 점령 여부 확인할 Bt_Occupation 내의 Off 요소
+    public Text textSpotInfo; // 스팟의 상태
+    public TextMeshProUGUI resource; // 자원량
+    public Text OccupationResource; // 스팟 점령에 필요한 자원량
+    public GameObject OccupationResourceInfo; // 스팟 점령 가능 여부 정보
 
     private void Awake()
     {
@@ -46,11 +53,57 @@ public class GameManager : MonoBehaviour
         ResetTimer();
     }
 
+    // 씬 이동 함수
+    public void LoadCameraScene()
+    {
+        SceneManager.LoadScene("Camera Scene");
+    }
+    public void LoadMainScene()
+    {
+        SceneManager.LoadScene("Main Scene");
+    }
+
+    public void LoadSampleScene()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+
     // 점령 여부 체크
     public void CheckZoneCaptured()
     {
         // occupationOff가 비활성화되어 있으면 점령되지 않은 상태, 활성화되어 있으면 점령된 상태
         isZoneCaptured = occupationOff.activeSelf;
+    }
+
+    public void CaptureZone()
+    {
+        // Parse the resource and occupation resource values from their text components
+        int resourceValue = int.Parse(resource.text); // Assuming the resource text is purely numeric
+        int occupationResourceValue = int.Parse(OccupationResource.text); // Assuming the occupation resource text is purely numeric
+
+        // Check if the resource value is greater than or equal to the required occupation resource
+        if (resourceValue >= occupationResourceValue)
+        {
+            // Deduct the occupation resource value from the resource value
+            resourceValue -= occupationResourceValue;
+            resource.text = resourceValue.ToString(); // Update the resource text to reflect the new value
+
+            // Disable the occupation resource information
+            OccupationResourceInfo.SetActive(false);
+
+            // Enable the occupation off GameObject to indicate the zone is now occupied
+            occupationOff.SetActive(true);
+
+            // Set the zone captured status to true
+            isZoneCaptured = true;
+
+            // Optionally, log the capture action
+            Debug.Log("Zone has been successfully captured.");
+        }
+        else
+        {
+            Debug.Log("Not enough resources to capture the zone.");
+        }
     }
 
     // 타이머를 특정 조건에서 05:00으로 설정 후 시작
