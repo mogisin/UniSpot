@@ -36,12 +36,12 @@ window.initMap = function() {
     map.fitBounds(bounds);
 
     // 몬스터 마커를 추가하는 함수
-    window.addMonsterMarker = function(monsterId, latitude, longitude) {
+    window.addMonsterMarker = function(monsterId,monsterName, latitude, longitude) {
         // 이미 해당 몬스터 마커가 있는지 확인
         if (!monsterMarkers[monsterId]) {
             const marker = new google.maps.Marker({
                 position: { lat: latitude, lng: longitude },
-                label: 'Monster',
+                label: monsterName,
                 map: map
             });
             monsterMarkers[monsterId] = marker;  // 마커 저장

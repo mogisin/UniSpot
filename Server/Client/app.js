@@ -123,7 +123,7 @@ function initWebSocket() {
     // 마커 모두 제거 (getAllMonsters로 받은 데이터를 활용)
     function showAllMonsterMarkers(monsters) {
         monsters.forEach(monster => {
-            addMonsterMarker(monster._id, monster.location.latitude, monster.location.longitude);
+            addMonsterMarker(monster._id,monster.name, monster.location.latitude, monster.location.longitude);
         });
         logMessage('All monster markers added.');
     }
