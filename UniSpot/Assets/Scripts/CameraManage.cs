@@ -50,8 +50,8 @@ public class CameraManage : MonoBehaviour
         // 카메라 앞쪽으로 spawnDistance 만큼 떨어진 위치 계산
         Vector3 spawnPosition = cameraPosition + cameraForward * spawnDistance;
 
-        // 카메라의 회전값과 동일하게 생성
-        Quaternion spawnRotation = arCamera.transform.rotation;
+        // 카메라의 회전값에 Y축으로 180도 회전 추가
+        Quaternion spawnRotation = arCamera.transform.rotation * Quaternion.Euler(0, 180, 0);
 
         // 앵커 생성 및 위치 고정
         GameObject anchorObject = new GameObject("Anchor");
@@ -71,5 +71,6 @@ public class CameraManage : MonoBehaviour
             spawnedMonster = Instantiate(selectedPrefab, anchor.transform.position, anchor.transform.rotation, anchor.transform);
         }
     }
+
 
 }

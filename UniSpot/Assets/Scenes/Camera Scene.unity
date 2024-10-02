@@ -286,6 +286,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1289141136}
     m_Modifications:
+    - target: {fileID: 1086527671494139231, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1524472419455238816, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -366,6 +370,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2529112877138225055, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 726
+      objectReference: {fileID: 0}
+    - target: {fileID: 2529112877138225055, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 726
+      objectReference: {fileID: 0}
     - target: {fileID: 3189049252521688168, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -380,27 +392,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4865175816681756139, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4865175816681756139, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 551225672}
+      objectReference: {fileID: 1717701272}
     - target: {fileID: 4865175816681756139, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadMainScene
+      value: LoadSelectScene
       objectReference: {fileID: 0}
     - target: {fileID: 4865175816681756139, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SceneManage, Assembly-CSharp
+      value: FixedGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4865175816681756139, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: 
+      value: Main Scene
       objectReference: {fileID: 0}
     - target: {fileID: 4865175816681756139, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293845499210635181, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 696
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293845499210635181, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 696
+      objectReference: {fileID: 0}
+    - target: {fileID: 6515531087508257951, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 630
+      objectReference: {fileID: 0}
+    - target: {fileID: 6515531087508257951, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 630
       objectReference: {fileID: 0}
     - target: {fileID: 6661991338567726698, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_Name
@@ -459,6 +487,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b42b39ffea5c62f46beda43a80317e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &570941369 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6515531087508257951, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+  m_PrefabInstance: {fileID: 551225668}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &695095442
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,7 +502,6 @@ GameObject:
   m_Component:
   - component: {fileID: 695095444}
   - component: {fileID: 695095443}
-  - component: {fileID: 695095445}
   - component: {fileID: 695095446}
   m_Layer: 0
   m_Name: XR Origin
@@ -511,20 +543,6 @@ Transform:
   - {fileID: 399148079}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &695095445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 695095442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PlanePrefab: {fileID: 1659353924143776747, guid: 4cb4462186323ec42bd13c574abe9426, type: 3}
-  m_DetectionMode: -1
 --- !u!114 &695095446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1192,6 +1210,7 @@ GameObject:
   - component: {fileID: 1717701271}
   - component: {fileID: 1717701269}
   - component: {fileID: 1717701268}
+  - component: {fileID: 1717701272}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -1212,11 +1231,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gaugeImage: {fileID: 551225670}
-  fixedIncreaseAmount: 0.025
+  fixedIncreaseAmount: 0.05
   fillDecreaseSpeed: 0.1
   delayBeforeDecrease: 1
   resultSuccess: {fileID: 293603016}
   resultFailed: {fileID: 1620940305}
+  frameCenter: {fileID: 570941369}
 --- !u!114 &1717701269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1269,6 +1289,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1717701272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717701267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebd108924d4b57749a65a51591b00b9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1973743088
 GameObject:
   m_ObjectHideFlags: 0

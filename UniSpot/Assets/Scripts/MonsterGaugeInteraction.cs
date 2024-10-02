@@ -16,8 +16,18 @@ public class MonsterGaugeInteraction : MonoBehaviour
     private bool resultFailedActive = false; // Result_Failed 활성화 상태 플래그
     private bool resultSuccessActive = false; // Result_Success 활성화 상태 플래그
 
+    public RectTransform frameCenter; // Frame_Center의 RectTransform
+    private Rect frameRect;
+
     void Start()
     {
+        // Frame_Center의 RectTransform을 스크린 좌표로 변환
+        Vector3[] frameCorners = new Vector3[4];
+        frameCenter.GetWorldCorners(frameCorners);
+        frameRect = new Rect(frameCorners[0].x, frameCorners[0].y,
+                             frameCorners[2].x - frameCorners[0].x,
+                             frameCorners[2].y - frameCorners[0].y);
+
         // 게이지 감소를 딜레이 후에 시작
         StartCoroutine(StartDecreasingGaugeWithDelay());
     }
@@ -27,7 +37,13 @@ public class MonsterGaugeInteraction : MonoBehaviour
         // 터치 입력 감지 (포획 실패 상태가 아닐 때만)
         if (Input.GetMouseButtonDown(0) && !isCaptureFailed && !resultSuccessActive)
         {
-            IncreaseGaugeFixedAmount();
+            Vector3 touchPosition = Input.mousePosition;
+
+            // 터치 위치가 Frame_Center 안에 있는지 확인
+            if (frameRect.Contains(touchPosition))
+            {
+                IncreaseGaugeFixedAmount();
+            }
         }
     }
 

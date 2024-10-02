@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - resource
+  - playerIDTextMesh
+  - timerTextMesh
+  - textSpotInfo
+  - OccupationResource
+  - OccupationResourceInfo
+  - occupationOff
   layers:
   - Default
   - TransparentFX
