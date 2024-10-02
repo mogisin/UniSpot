@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
 const spotSchema = new mongoose.Schema({
-  spotname: String,
+  spotName: String,
   dept: String,
   description:String,
-
+  lastPoint: String,
+  
   location: {
     latitude: Number,
     longitude: Number,

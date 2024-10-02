@@ -1,5 +1,6 @@
 const User = require('./models/User');
 const Monster = require('./models/Monster');
+const Spot = require('./models/Spot')
 const { getDistanceFromLatLonInMeters, generateRandomMonsters } = require('./utils');
 
 async function handleMessage(ws, message) {
@@ -138,6 +139,36 @@ async function handleMessage(ws, message) {
                   message: `Monster with ID ${monsterId} not found.`
               }));
           }
+      } else if (data.type === 'capture_spot'){
+        const {username, spotName} = data;
+        let spot = await Spot.findOne({ spotName });
+        let user = await User.findOne({ username });
+
+        if (!spot || !user) {
+          console.error("Spot or User not found.");
+          return;
+        }
+
+        let userPoint = user.monsters.length;
+
+        if (spot.capturedBy != username){
+
+          if (userPoint > spot.lastPoint){
+            spot.capturedBy = username;
+            await spot.save();
+            user.monsters = [];
+            await user.save();
+            
+            console.log(`${username} captured ${spotName}`);
+          } else {
+            console.log(`${username} does not have enough points to capture ${spotName}`);
+          }
+
+        } else {
+          console.log(`${username} already captured ${spotName}`);
+        }
+        
+
       }
   
   
