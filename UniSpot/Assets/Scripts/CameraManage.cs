@@ -15,6 +15,9 @@ public class CameraManage : MonoBehaviour
 
     void Start()
     {
+        // 랜덤 시드 초기화
+        Random.InitState(System.DateTime.Now.Millisecond);
+
         // XROrigin 및 ARAnchorManager 찾기
         xrOrigin = FindObjectOfType<XROrigin>();
         anchorManager = FindObjectOfType<ARAnchorManager>();
@@ -32,6 +35,7 @@ public class CameraManage : MonoBehaviour
             Debug.LogWarning("Monster has not been spawned yet.");
         }
     }
+
 
     // 앵커를 통한 몬스터 생성
     void SpawnMonsterWithAnchor()
@@ -65,4 +69,6 @@ public class CameraManage : MonoBehaviour
             spawnedMonster = Instantiate(selectedPrefab, anchor.transform.position, anchor.transform.rotation, anchor.transform);
         }
     }
+
+
 }

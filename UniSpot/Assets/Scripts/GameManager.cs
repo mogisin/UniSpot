@@ -69,6 +69,12 @@ public class GameManager : MonoBehaviour
     }
 
     // ¾À ÀÌµ¿ ÇÔ¼ö
+    public void LoadSelectScene(string Scenename)
+    {
+        SaveGameData();
+        SceneManager.LoadScene(Scenename);
+    }
+    
     public void LoadCameraScene()
     {
         SaveGameData();
