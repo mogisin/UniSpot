@@ -6,14 +6,12 @@ using Unity.XR.CoreUtils;
 
 public class CameraManage : MonoBehaviour
 {
-    public GameObject monsterPrefab; // 생성할 몬스터 프리팹
+    public GameObject[] monsterPrefabs; // 여러 개의 몬스터 프리팹
     private GameObject spawnedMonster; // 실제 생성된 몬스터 인스턴스
     public float spawnDistance = 2.0f; // 카메라 앞쪽으로 얼마나 떨어진 곳에 생성할지
 
     private XROrigin xrOrigin;
     private ARAnchorManager anchorManager;
-
-
 
     void Start()
     {
@@ -24,7 +22,6 @@ public class CameraManage : MonoBehaviour
         // 몬스터 생성하기
         SpawnMonsterWithAnchor();
 
-
         if (spawnedMonster != null)
         {
             Vector3 monsterScreenPosition = Camera.main.WorldToScreenPoint(spawnedMonster.transform.position);
@@ -34,7 +31,6 @@ public class CameraManage : MonoBehaviour
         {
             Debug.LogWarning("Monster has not been spawned yet.");
         }
-        
     }
 
     // 앵커를 통한 몬스터 생성
@@ -61,10 +57,12 @@ public class CameraManage : MonoBehaviour
 
         if (anchor != null)
         {
-            Instantiate(monsterPrefab, anchor.transform.position, anchor.transform.rotation, anchor.transform);
+            // 랜덤한 몬스터 프리팹 선택
+            int randomIndex = Random.Range(0, monsterPrefabs.Length);
+            GameObject selectedPrefab = monsterPrefabs[randomIndex];
+
+            // 몬스터 인스턴스 생성 및 저장
+            spawnedMonster = Instantiate(selectedPrefab, anchor.transform.position, anchor.transform.rotation, anchor.transform);
         }
-
     }
-
-
 }
