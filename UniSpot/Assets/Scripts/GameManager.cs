@@ -28,22 +28,30 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        // 싱글톤 인스턴스 생성
+        Debug.Log("GameManager Awake: Initializing Singleton");
+
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);  // 씬 전환 시에도 파괴되지 않음
-
-
+            Debug.Log("GameManager: Set as Singleton and DontDestroyOnLoad");
         }
         else
         {
+            Debug.Log("GameManager: Another instance found, destroying new one.");
             Destroy(gameObject);  // 다른 인스턴스가 있다면 새로 생성하지 않음
         }
     }
-    
+
     private void Start()
     {
+        Debug.Log("GameManager Start: Checking EventSystem State");
+        var existingEventSystem = FindObjectOfType<EventSystem>();
+        if (existingEventSystem != null)
+        {
+            Debug.Log($"EventSystem State at Start: {existingEventSystem.gameObject.activeSelf}");
+        }
+
         LoadGameData();
 
         // 플레이어 ID 기본 값 설정 (빈 값일 경우 "User Name")
@@ -82,7 +90,13 @@ public class GameManager : MonoBehaviour
     }
     public void LoadMainScene()
     {
+        Debug.Log("LoadMainScene: Saving GameData and Transitioning to Main Scene");
+
         SaveGameData();
+
+        var existingEventSystem = FindObjectOfType<EventSystem>();
+        Debug.Log($"EventSystem State before Scene Load: {existingEventSystem != null && existingEventSystem.gameObject.activeSelf}");
+
         SceneManager.LoadScene("Main Scene");
     }
 
@@ -228,4 +242,37 @@ public class GameManager : MonoBehaviour
         // 타이머가 끝났을 때 처리할 로직
         Debug.Log("Timer has ended!");
     }
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log($"Scene Loaded: {scene.name}"); // 씬 이름과 로드 모드 로그
+
+        var existingEventSystem = FindObjectOfType<EventSystem>();
+        Debug.Log($"EventSystem Found: {existingEventSystem != null}"); // EventSystem 존재 여부 로그
+
+        if (existingEventSystem != null)
+        {
+            if (scene.name == "Main Scene")
+            {
+                existingEventSystem.gameObject.SetActive(true);
+                Debug.Log("Main Scene Loaded: Activating EventSystem.");
+            }
+            else
+            {
+                existingEventSystem.gameObject.SetActive(false);
+                Debug.Log($"{scene.name} Loaded: Deactivating EventSystem.");
+            }
+        }
+    }
+        
+
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using Unity.XR.CoreUtils;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class CameraManage : MonoBehaviour
 {
@@ -69,6 +71,5 @@ public class CameraManage : MonoBehaviour
             spawnedMonster = Instantiate(selectedPrefab, anchor.transform.position, anchor.transform.rotation, anchor.transform);
         }
     }
-
 
 }
