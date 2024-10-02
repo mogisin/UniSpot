@@ -1190,7 +1190,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1717701271}
-  - component: {fileID: 1717701270}
   - component: {fileID: 1717701269}
   - component: {fileID: 1717701268}
   m_Layer: 0
@@ -1230,20 +1229,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf5e35de19b679641a445b83ba35a3e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 8645504429318352872, guid: 7498ecf44c6e126429c6146821aaa0a0, type: 3}
+  monsterPrefab: {fileID: 3040541675164758280, guid: 2b914a989402eaf45a851574ebdf44e9, type: 3}
   spawnDistance: 2
---- !u!114 &1717701270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1717701267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cd956ad24259104981c8fc7b2a5043d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1717701271
 Transform:
   m_ObjectHideFlags: 0
