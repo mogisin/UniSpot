@@ -2,7 +2,7 @@ function initWebSocket() {
     const socket = new WebSocket('ws://localhost:8000');
     let isMarkersVisible = false; // 몬스터 마커가 표시 중인지 추적
     let isCapturePending = false; // 캡처 중 여부를 확인하는 플래그
-
+    let nearbyMonsters = [];
     // 로그 출력 함수
     function logMessage(message) {
         const logDiv = document.getElementById('log');
@@ -43,9 +43,26 @@ function initWebSocket() {
         } else if (data.type === 'delete_all_success') {
             logMessage('All monsters have been deleted from the database.');
             removeAllMonsterMarkers(); // 모든 마커 제거
+        } else if (data.type === 'nearby_monsters'){
+            nearbyMonsters = data.monsters;
+            if (isCapturePending){
+                if (nearbyMonsters.length>0){
+                    logMessage(`가까운 몬스터 id : ${nearbyMonsters[0]._id}`)
+                    
+                    captureMonster(nearbyMonsters[0]); // 몬스터 객체 전송
+                } else{
+                    logMessage('No nearby monsters to capture.');
+                isCapturePending = false; // 대기 상태 해제
+                }
+            }
+             else { 
+                logMessage('No Pending Request about Capture');
+            } 
+
+        } else{
+            logMessage('Received from server: ' + event.data);
         }
 
-        logMessage('Received from server: ' + event.data);
     };
 
     // WebSocket 연결이 닫힐 때
@@ -88,7 +105,7 @@ function initWebSocket() {
     window.generateMonsters = function() {
         const message = {
             type: 'generate_monsters',
-            count: 1 // 생성할 몬스터 수
+            count: 5 // 생성할 몬스터 수
         };
         socket.send(JSON.stringify(message));
         logMessage('Requested to generate random monsters: ' + JSON.stringify(message));
@@ -118,6 +135,24 @@ function initWebSocket() {
         isCapturePending = true; // 캡처 요청이 대기 중임을 표시
         getAllMonsters(); // 모든 몬스터 요청
     };
+    
+    //가까운 랜덤 몬스터 포획 요청
+    window.captureNearbyMonster = function(){
+        logMessage('captureNearbyMonster button clicked');
+        isCapturePending = true
+        sendLocation('소프트웨어융합대학'); // 일단 소융대 주변 가까운 몬스터 포획 시도
+
+        
+        // const captureMessage = {
+        //     type:'capture',
+        //     username: 'testUser',
+        //     monsterId: nearbyMonsters[0]._id
+        // }
+        // socket.send(JSON.stringify(captureMessage));
+        // logMessage(`Capture : Requested to capture monster with ID: ${nearbyMonsters[0]._id}`);
+
+
+    }
 
     // 마커 모두 제거 (getAllMonsters로 받은 데이터를 활용)
     function showAllMonsterMarkers(monsters) {
@@ -125,6 +160,18 @@ function initWebSocket() {
             addMonsterMarker(monster._id,monster.name, monster.location.latitude, monster.location.longitude);
         });
         logMessage('All monster markers added.');
+    }
+    function captureMonster(monsterToCapture){
+        // const monsterToCapture = nearbyMonsters[0];
+        const captureMessage = {
+            type:'capture',
+            username: 'testUser',
+            monsterId: monsterToCapture._id
+        }
+        socket.send(JSON.stringify(captureMessage));
+        logMessage(`Capture : Requested to capture monster: ${monsterToCapture.name}, ${monsterToCapture._id}`);
+    
+        isCapturePending = false; // 대기 상태 해제
     }
 
     // 토글 버튼 클릭 시 실행되는 함수

@@ -98,7 +98,9 @@ async function handleMessage(ws, message) {
         type:'get_all_monsters',
         monsters:allMonsters
       };
-      console.log(allMonsters)
+      console.log('모든 몬스터 출력 시작')
+      // console.log(allMonsters)
+      console.log('모든 몬스터 출력 종료')
       ws.send(JSON.stringify(response))
     }
 
