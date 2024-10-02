@@ -861,16 +861,9 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0
-    functionName: 
+    functionName: Engineering_3_anim
     data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 10
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 8119980365122356310, guid: 85dfc62674afb8e4dbf998705e487487, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

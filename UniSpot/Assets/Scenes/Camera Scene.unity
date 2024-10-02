@@ -1229,7 +1229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf5e35de19b679641a445b83ba35a3e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 3040541675164758280, guid: 2b914a989402eaf45a851574ebdf44e9, type: 3}
+  monsterPrefab: {fileID: 3229299873849011109, guid: 96947d5e43f47ac429ed4453d972cd02, type: 3}
   spawnDistance: 2
 --- !u!4 &1717701271
 Transform:

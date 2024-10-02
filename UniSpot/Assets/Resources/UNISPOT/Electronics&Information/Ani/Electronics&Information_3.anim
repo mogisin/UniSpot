@@ -623,16 +623,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: 
+    functionName: ElectronicsInformation_3_anim
     data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 10
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 2426077079966422671, guid: 69959248c551fa840923d691d28ccbc6, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

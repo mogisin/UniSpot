@@ -2296,16 +2296,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: 
+    functionName: Applied_Sciences_3_anim
     data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 10
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 8356317438941835536, guid: 220421be52bc073439d253c4abfb505b, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
