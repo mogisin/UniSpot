@@ -45,12 +45,24 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded; // 씬 로드 이벤트 구독
+
         Debug.Log("GameManager Start: Checking EventSystem State");
         var existingEventSystem = FindObjectOfType<EventSystem>();
         if (existingEventSystem != null)
         {
             Debug.Log($"EventSystem State at Start: {existingEventSystem.gameObject.activeSelf}");
         }
+
+        try
+        {
+            playerIDTextMesh = GameObject.FindWithTag("PlayerID").GetComponent<TextMeshProUGUI>();
+        }
+        catch (UnityException e)
+        {
+            Debug.LogWarning("PlayerID tag is not defined or object not found: " + e.Message);
+        }
+
 
         LoadGameData();
 
@@ -210,13 +222,25 @@ public class GameManager : MonoBehaviour
 
     public void LoadGameData()
     {
-        // 플레이어 ID 불러오기 (기본값: "User Name")
+        // 플레이어 ID 불러오기 (기본값: "User Name" 또는 빈 값이 허용되지 않으면 예외 처리)
         playerID = PlayerPrefs.GetString("PlayerID", "User Name");
+        if (string.IsNullOrEmpty(playerID))
+        {
+            Debug.LogWarning("PlayerID is not set. Using default value 'User Name'.");
+            playerID = "User Name";
+        }
         playerIDTextMesh.text = playerID;
 
         // 점령 여부 불러오기 (기본값: 점령되지 않은 상태)
         isZoneCaptured = PlayerPrefs.GetInt("IsZoneCaptured", 0) == 1;
-        occupationOff.SetActive(!isZoneCaptured);  // 점령 여부에 따라 Off 요소의 상태 조정
+        if (occupationOff != null)
+        {
+            occupationOff.SetActive(!isZoneCaptured);  // 점령 여부에 따라 Off 요소의 상태 조정
+        }
+        else
+        {
+            Debug.LogWarning("OccupationOff GameObject is not assigned.");
+        }
 
         // 타이머 값 불러오기 (기본값: 0초)
         timer = PlayerPrefs.GetFloat("Timer", 0f);
@@ -254,13 +278,20 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log($"Scene Loaded: {scene.name}"); // 씬 이름과 로드 모드 로그
-
         var existingEventSystem = FindObjectOfType<EventSystem>();
-        Debug.Log($"EventSystem Found: {existingEventSystem != null}"); // EventSystem 존재 여부 로그
 
+        // Main Scene이 로드될 때는 EventSystem을 활성화하고, 다른 씬에서는 비활성화
         if (existingEventSystem != null)
         {
+            // 태그로 오브젝트 찾기
+            playerIDTextMesh = GameObject.FindWithTag("PlayerID").GetComponent<TextMeshProUGUI>();
+            timerTextMesh = GameObject.FindWithTag("TimerText").GetComponent<TextMeshProUGUI>();
+            occupationOff = GameObject.FindWithTag("OccupationOff");
+            textSpotInfo = GameObject.FindWithTag("SpotInfo").GetComponent<Text>();
+            resource = GameObject.FindWithTag("ResourceText").GetComponent<TextMeshProUGUI>();
+            OccupationResource = GameObject.FindWithTag("OccupationResource").GetComponent<Text>();
+            OccupationResourceInfo = GameObject.FindWithTag("OccupationResourceInfo");
+
             if (scene.name == "Main Scene")
             {
                 existingEventSystem.gameObject.SetActive(true);
@@ -273,6 +304,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-        
+
+
 
 }
