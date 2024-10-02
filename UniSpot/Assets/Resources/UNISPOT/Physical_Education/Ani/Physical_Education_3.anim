@@ -538,7 +538,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 8.5
+    m_StopTime: 8.033334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -2116,16 +2116,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: 
+    functionName: Physical_Education_3_anim
     data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 8.5
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 8216170357933623021, guid: add4db707d497c348bf7c2110b70da7d, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

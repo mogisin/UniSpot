@@ -683,7 +683,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 10
+    m_StopTime: 6.45
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -2492,16 +2492,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: 
+    functionName: International_1_anim
     data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 10
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 2055920187531127949, guid: e92c94071c7e0624196ee7fdc092eaf7, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

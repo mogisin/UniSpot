@@ -1400,6 +1400,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3409762961310841660}
   - component: {fileID: 2483182145496395404}
+  - component: {fileID: -6845312737307452684}
   m_Layer: 0
   m_Name: Physical_Education_3
   m_TagString: Untagged
@@ -1417,7 +1418,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5393299507658661194}
@@ -1446,6 +1447,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-6845312737307452684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8216170357933623021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25da9d7e037ca7542b14620e19dabaeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8332274974222612624
 GameObject:
   m_ObjectHideFlags: 0
