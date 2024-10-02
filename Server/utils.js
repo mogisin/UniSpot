@@ -73,7 +73,7 @@ function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
     for (let i = 0; i < count; i++) {
       let randomDept = departments[Math.floor(Math.random() * departments.length)];
       let latitude, longitude;
-      let generateLocation;
+      let generateSpot;
 
       if (randomDept === '중앙도서관') {
         // '중앙도서관'일 경우 다른 학과를 랜덤 선택 (중앙도서관 제외)
@@ -85,7 +85,7 @@ function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
         latitude = centralCoordinates.latitude;
         longitude = centralCoordinates.longitude;
 
-        generateLocation = '중앙도서관';
+        generateSpot = '중앙도서관';
         
         
       } else {
@@ -93,7 +93,7 @@ function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
         const deptCoordinates = departmentCoordinates[randomDept];
         latitude = deptCoordinates.latitude;
         longitude = deptCoordinates.longitude;
-        generateLocation = randomDept;
+        generateSpot = randomDept;
       }
 
       // 좌표 범위 내에서 새로운 좌표 생성
@@ -102,8 +102,8 @@ function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
       const monster = new Monster({
         name: `${departmentAbbreviations[randomDept]}몬_${Math.floor(Math.random() * 1000)}`,
         dept: randomDept,
-        generateSpot: generateLocation,
-        description: `${departmentAbbreviations[generateLocation]}에 주로 출몰함`,
+        generateSpot: generateSpot,
+        description: `${departmentAbbreviations[generateSpot]}에 주로 출몰함`,
         tags: ['태그1', '태그2'],
         location: {
           latitude: newLatitude,
