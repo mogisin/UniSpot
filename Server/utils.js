@@ -1,5 +1,6 @@
 const User = require('./models/User');
 const Monster = require('./models/Monster');
+const Spot = require('./models/Spot');
 
 // Haversine 공식을 이용해 두 좌표 간의 거리를 계산하는 함수
 function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
@@ -40,7 +41,88 @@ function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
     return { newLatitude, newLongitude };
   }
   
-  // 랜덤 몬스터 생성 함수
+  async function newgenerateRandomMonsters(count = 5) {
+    const monsters = [];
+
+    // DB에서 Spot 컬렉션에서 좌표 정보를 불러옴
+    const spots = await Spot.find({});
+
+    // Spot 데이터를 {name: {latitude, longitude}} 형식으로 변환
+    const departmentCoordinates = {};
+    spots.forEach(spot => {
+        departmentCoordinates[spot.spotName] = {
+            latitude: spot.location.latitude,
+            longitude: spot.location.longitude
+        };
+    });
+
+    const departments = Object.keys(departmentCoordinates);
+
+    const departmentAbbreviations = {
+      '소프트웨어융합대학': '소융대',
+      '전자정보대학': '전정대',
+      '응용과학대학': '응과대',
+      '체육대학': '체대',
+      '공과대학': '공대',
+      '예술디자인대학': '예디대',
+      '외국어대학': '외대',
+      '생명과학대학': '생대',
+      '중앙도서관': '중앙도서관'
+    };
+
+    for (let i = 0; i < count; i++) {
+      let randomDept = departments[Math.floor(Math.random() * departments.length)];
+      let latitude, longitude;
+      let generateLocation;
+
+      if (randomDept === '중앙도서관') {
+        // '중앙도서관'일 경우 다른 학과를 랜덤 선택 (중앙도서관 제외)
+        const otherDepartments = departments.filter(dept => dept !== '중앙도서관');
+        randomDept = otherDepartments[Math.floor(Math.random() * otherDepartments.length)];
+
+        // 위치는 중앙도서관의 좌표를 사용
+        const centralCoordinates = departmentCoordinates['중앙도서관'];
+        latitude = centralCoordinates.latitude;
+        longitude = centralCoordinates.longitude;
+
+        generateLocation = '중앙도서관';
+        
+        
+      } else {
+        // 일반적인 경우 해당 학과의 좌표를 사용
+        const deptCoordinates = departmentCoordinates[randomDept];
+        latitude = deptCoordinates.latitude;
+        longitude = deptCoordinates.longitude;
+        generateLocation = randomDept;
+      }
+
+      // 좌표 범위 내에서 새로운 좌표 생성
+      const { newLatitude, newLongitude } = getRandomCoordinateWithinRadius(latitude, longitude);
+
+      const monster = new Monster({
+        name: `${departmentAbbreviations[randomDept]}몬_${Math.floor(Math.random() * 1000)}`,
+        dept: randomDept,
+        generateSpot: generateLocation,
+        description: `${departmentAbbreviations[generateLocation]}에 주로 출몰함`,
+        tags: ['태그1', '태그2'],
+        location: {
+          latitude: newLatitude,
+          longitude: newLongitude
+        },
+        captured: false
+      });
+
+      await monster.save();
+      monsters.push(monster);
+    }
+
+    return monsters;
+}
+
+
+
+
+  // 기존 랜덤 몬스터 생성 함수
   async function generateRandomMonsters(count = 5) {
     const monsters = [];
   
@@ -84,6 +166,7 @@ function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
   module.exports = {
     getDistanceFromLatLonInMeters,
     getRandomCoordinateWithinRadius,
-    generateRandomMonsters
+    generateRandomMonsters,
+    newgenerateRandomMonsters
   };
   

@@ -1,7 +1,8 @@
 const User = require('./models/User');
 const Monster = require('./models/Monster');
 const Spot = require('./models/Spot')
-const { getDistanceFromLatLonInMeters, generateRandomMonsters } = require('./utils');
+const { getDistanceFromLatLonInMeters, generateRandomMonsters, newgenerateRandomMonsters } = require('./utils');
+
 
 async function handleMessage(ws, message) {
   try {
@@ -9,7 +10,9 @@ async function handleMessage(ws, message) {
 
     // 랜덤 몬스터 더미 데이터 생성
     if (data.type === 'generate_monsters') {
-      const monsters = await generateRandomMonsters(data.count || 5);
+      const monsters = await newgenerateRandomMonsters(data.count || 1);
+      // const monsters = await generateRandomMonsters(data.count || 1);
+
       ws.send(JSON.stringify({
         type: 'generate_monsters_success',
         message: `${monsters.length} monsters created successfully.`,

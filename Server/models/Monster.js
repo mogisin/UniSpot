@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const MonsterSchema = new mongoose.Schema({
   name: String,
   dept: String,
+  generateSpot:String,
   description: String,  // 몬스터 설명
   tags: [String],  // 몬스터 태그 (배열 형태)
   location: {
