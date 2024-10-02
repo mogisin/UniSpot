@@ -2142,16 +2142,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: 
+    functionName: Foreign_Language_1_anim
     data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 10
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 7855488558329097101, guid: 19cf0bff5dca6d14485c570eb06cf0d6, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

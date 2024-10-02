@@ -1017,16 +1017,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: 
+    functionName: Life_Sciences_1_anim
     data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 10
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 7891585882738831387, guid: ec36e7a8c60f5324daa3cd4ca9a140ae, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
