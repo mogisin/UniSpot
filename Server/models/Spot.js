@@ -4,8 +4,7 @@ const spotSchema = new mongoose.Schema({
   spotName: String,
   dept: String,
   description:String,
-  lastPoint: String,
-  
+  lastPoint: {type:Number, default:0},
   location: {
     latitude: Number,
     longitude: Number,

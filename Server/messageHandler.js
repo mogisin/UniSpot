@@ -158,7 +158,7 @@ async function handleMessage(ws, message) {
             await spot.save();
             user.monsters = [];
             await user.save();
-            
+
             console.log(`${username} captured ${spotName}`);
           } else {
             console.log(`${username} does not have enough points to capture ${spotName}`);
@@ -167,8 +167,6 @@ async function handleMessage(ws, message) {
         } else {
           console.log(`${username} already captured ${spotName}`);
         }
-        
-
       }
   
   
