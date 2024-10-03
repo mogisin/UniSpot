@@ -41,7 +41,7 @@ function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
     return { newLatitude, newLongitude };
   }
   
-  async function newgenerateRandomMonsters(count = 5) {
+  async function newgenerateRandomMonsters(count = 5) { //중앙도서관 및 위치정보를 db에서 받아오도록 수정됨
     const monsters = [];
 
     // DB에서 Spot 컬렉션에서 좌표 정보를 불러옴

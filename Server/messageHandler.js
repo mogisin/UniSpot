@@ -152,7 +152,8 @@ async function handleMessage(ws, message) {
                   message: `Monster with ID ${monsterId} not found.`
               }));
           }
-      } else if (data.type === 'capture_spot'){
+      } 
+      else if (data.type === 'capture_spot'){
         const {username, spotName} = data;
         let spot = await Spot.findOne({ spotName });
         let user = await User.findOne({ username });
@@ -224,6 +225,16 @@ async function handleMessage(ws, message) {
           monsters: nearbyMonsters
         }));
         
+      } else if(data.type === 'get_user_money'){
+        const{username} = data;
+        const user = await User.findOne({username});
+        const message = {
+          type:'res_user_money',
+          username: user.username,
+          money: user.money
+        }
+        ws.send(JSON.stringify(message));
+        console.log(`res_user_money : 유저 money 데이터 반환 : ${user.money}`);
       }
 
   } catch (error) {

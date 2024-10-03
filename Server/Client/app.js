@@ -65,7 +65,11 @@ function initWebSocket() {
             logMessage('Received res_nearby_monsters');
             // logMessage(nearbyMonsters[0].name);
 
-        } else{
+        } else if(data.type === 'res_user_money'){
+            const {money} = data;
+            logMessage(`현재 유저 money : ${money}`);
+        }
+        else{
             logMessage('Received from server: ' + event.data);
         }
 
@@ -157,6 +161,14 @@ function initWebSocket() {
         socket.send(JSON.stringify(message));
         logMessage('Requested to delete all monsters.');
     };
+    window.getUserMoney = function(){
+        const message = {
+            type: 'get_user_money',
+            username:'testUser'
+        }
+        socket.send(JSON.stringify(message));
+        logMessage('get_user_money : 유저 money 데이터 요청 보냄')
+    }
 
     // 랜덤 몬스터 포획 요청
     window.captureAnyMonster = function() {
