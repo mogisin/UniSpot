@@ -6,11 +6,13 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine.UI; 
-using TMPro; 
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class WebSocketClient : MonoBehaviour
 {
     private ClientWebSocket webSocket;
+
 
     async void Start()
     {
@@ -27,6 +29,7 @@ public class WebSocketClient : MonoBehaviour
         // 서버 응답을 대기하는 비동기 함수 호출
         await ReceiveMessagesAsync();
     }
+
 
     // 서버로 get_user_money 메시지 보내기
     private async void SendGetUserMoneyMessage(string username)
@@ -63,16 +66,19 @@ public class WebSocketClient : MonoBehaviour
                 // JSON 메시지 파싱
                 MoneyResponse response = JsonUtility.FromJson<MoneyResponse>(message);
 
+                // 수신된 money 값을 ServerData에 저장
+                ServerData.userMoney = response.money; // 수정된 부분: 수신된 값을 저장
+
                 // "money" 값을 TextMeshProUGUI에 표시
                 if (moneyText != null)
-                {
-                    moneyText.text = $"{response.money}";
+                {   
+                    moneyText.text = $"{ServerData.userMoney}";
                 }
 
                 // "money" 값을 두 번째 TextMeshProUGUI에도 표시
                 if (moneyText2 != null)
                 {
-                    moneyText2.text = $"{response.money}";
+                    moneyText2.text = $"{ServerData.userMoney}";
                 }
 
                 // GameObject에 특정 동작을 할당
@@ -118,5 +124,15 @@ public class WebSocketClient : MonoBehaviour
     public TextMeshProUGUI moneyText2;
     public GameObject someGameObject; // money 값에 따라 동작할 GameObject 필드
 
+    private async void OnDisable()
+    {
+        // WebSocket 연결이 존재하고 열려 있는지 확인
+        if (webSocket != null && webSocket.State == WebSocketState.Open)
+        {
+            await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing due to scene change", CancellationToken.None);
+            webSocket.Dispose();
+            Debug.Log("WebSocket closed due to scene change.");
+        }
+    }
 
 }
