@@ -7,7 +7,13 @@ const userSchema = new mongoose.Schema({
     latitude: Number,
     longitude: Number,
   },
-  monsters: [{ name: String, capturedAt: Date }],
+  monsters: [{
+    name: String,
+    capturedAt: Date,
+    monsterId: { type: mongoose.Schema.Types.ObjectId, ref: 'Monster' }, // 몬스터의 ObjectId 참조 추가
+    _id: false
+  }
+  ],
 });
 
 module.exports = mongoose.model('User', userSchema);

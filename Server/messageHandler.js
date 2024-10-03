@@ -88,7 +88,11 @@ async function handleMessage(ws, message) {
         user.money += 100;
         await user.save();
 
-        user.monsters.push({ name: monster.name, capturedAt: new Date() });
+        user.monsters.push({ 
+          name: monster.name, 
+          capturedAt: new Date(),
+          monsterId:monster._id
+        });
         await user.save();
 
         console.log('유저 몬스터 목록 업데이트:', user);
