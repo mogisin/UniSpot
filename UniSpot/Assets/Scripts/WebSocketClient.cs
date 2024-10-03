@@ -5,6 +5,8 @@ using UnityEngine;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEngine.UI; 
+using TMPro; 
 
 public class WebSocketClient : MonoBehaviour
 {
@@ -57,6 +59,35 @@ public class WebSocketClient : MonoBehaviour
             {
                 var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
                 Debug.Log("Received: " + message);
+
+                // JSON 메시지 파싱
+                MoneyResponse response = JsonUtility.FromJson<MoneyResponse>(message);
+
+                // "money" 값을 TextMeshProUGUI에 표시
+                if (moneyText != null)
+                {
+                    moneyText.text = $"{response.money}";
+                }
+
+                // "money" 값을 두 번째 TextMeshProUGUI에도 표시
+                if (moneyText2 != null)
+                {
+                    moneyText2.text = $"{response.money}";
+                }
+
+                // GameObject에 특정 동작을 할당
+                if (someGameObject != null)
+                {
+                    // 예시로 GameObject를 활성화 또는 비활성화
+                    if (response.money > 1000)
+                    {
+                        someGameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        someGameObject.SetActive(false);
+                    }
+                }
             }
         }
     }
@@ -71,4 +102,21 @@ public class WebSocketClient : MonoBehaviour
             Debug.Log("WebSocket closed.");
         }
     }
+
+
+    // JSON 데이터 구조를 표현할 클래스 정의
+    [System.Serializable]
+    public class MoneyResponse
+    {
+        public string type;
+        public string username;
+        public int money;
+    }
+
+    // 필드 추가
+    public TextMeshProUGUI moneyText; // TextMeshProUGUI에 값을 표시하기 위한 필드
+    public TextMeshProUGUI moneyText2;
+    public GameObject someGameObject; // money 값에 따라 동작할 GameObject 필드
+
+
 }
