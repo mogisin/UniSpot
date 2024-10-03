@@ -128,6 +128,25 @@ public class WebSocketClient : MonoBehaviour
         Debug.Log("Sent money update to server: " + message);
     }
 
+    // 서버에 몬스터 정보 보내기
+    public async void SendMonsterNameMessage(string monsterName)
+    {
+        string message = $@"
+    {{
+        ""type"": ""capture_monster"",
+        ""username"": ""testUser"",
+        ""monsterName"": ""{monsterName}""
+    }}";
+
+        byte[] bytesToSend = Encoding.UTF8.GetBytes(message);
+
+        // 서버로 메시지 전송
+        await webSocket.SendAsync(new ArraySegment<byte>(bytesToSend), WebSocketMessageType.Text, true, CancellationToken.None);
+
+        Debug.Log("Sent monster name to server: " + message);
+    }
+
+
     // JSON 데이터 구조를 표현할 클래스 정의
     [System.Serializable]
     public class MoneyResponse

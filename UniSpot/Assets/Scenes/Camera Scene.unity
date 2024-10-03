@@ -278,6 +278,17 @@ Transform:
   - {fileID: 1330986425}
   m_Father: {fileID: 695095444}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &411221951 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6564912681045735234, guid: 20d8e9106edac7747a19832ca7362d18, type: 3}
+  m_PrefabInstance: {fileID: 1044695281}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &551225668
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1404,6 +1415,7 @@ MonoBehaviour:
   slot1: {fileID: 1987413427}
   slot2: {fileID: 1843817262}
   webSocketClient: {fileID: 1717701276}
+  moneyIncreaseText: {fileID: 411221951}
 --- !u!114 &1717701269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1440,7 +1452,15 @@ MonoBehaviour:
   - {fileID: 8578084863603980149, guid: dc865c97b3dcdea4192010055f7f1c8c, type: 3}
   - {fileID: 16295034818412614, guid: 2350fc4e529eb1548b2116bf499798b3, type: 3}
   - {fileID: 3229299873849011109, guid: 96947d5e43f47ac429ed4453d972cd02, type: 3}
+  monsterPrefabs1:
+  - {fileID: 1166555249685945832, guid: 04c079de3509b604a86002bac42e5f64, type: 3}
+  - {fileID: 3322458044969760855, guid: fefbb8b392bf8264c8118f82e3419328, type: 3}
+  monsterPrefabs2:
+  - {fileID: 1218739316016321694, guid: fd44e59a0db6dec4f9fee9f078c2a79b, type: 3}
   spawnDistance: 2
+  monsterPrefabs1Chance: 75
+  monsterPrefabs2Chance: 25
+  moneyIncreaseText: {fileID: 411221951}
 --- !u!4 &1717701271
 Transform:
   m_ObjectHideFlags: 0

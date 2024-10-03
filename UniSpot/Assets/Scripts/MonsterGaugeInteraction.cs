@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
+using TMPro;
 
 public class MonsterGaugeInteraction : MonoBehaviour
 {
@@ -23,6 +25,13 @@ public class MonsterGaugeInteraction : MonoBehaviour
     public GameObject slot2; // 슬롯 2 오브젝트
 
     public WebSocketClient webSocketClient; // WebSocketClient의 인스턴스를 참조할 변수
+    public static event Action OnCaptureSuccess; // 포획 성공 이벤트
+
+    public TextMeshProUGUI moneyIncreaseText; // 증가시킬 money 값을 담는 TextMeshProUGUI 컴포넌트
+
+
+    // 포획 성공 여부를 나타내는 변수
+    public bool IsCaptureSuccessful { get; private set; }
 
     void Start()
     {
@@ -111,6 +120,12 @@ public class MonsterGaugeInteraction : MonoBehaviour
             gaugeImage.fillAmount = 1f; // 게이지 최대치 고정
             Debug.Log("게이지 최대치에 도달!");
 
+            // 포획 성공 처리
+            IsCaptureSuccessful = true; // 포획 성공을 기록
+
+            // 포획 성공 이벤트 발생
+            OnCaptureSuccess?.Invoke();
+
             // 게이지 감소 중지
             isGaugeDecreasing = false;
 
@@ -118,9 +133,10 @@ public class MonsterGaugeInteraction : MonoBehaviour
             resultSuccess.SetActive(true);
             resultSuccessActive = true;
 
-            // userMoney를 50 증가시킴
-            ServerData.userMoney += 50; // WebSocketClient에서 관리하는 userMoney 값 업데이트
-            Debug.Log("userMoney increased by 50. New value: " + ServerData.userMoney);
+            // TextMeshProUGUI의 텍스트를 정수로 변환하여 증가시킬 값으로 사용
+            int increaseAmount = int.Parse(moneyIncreaseText.text);
+            ServerData.userMoney += increaseAmount;
+            Debug.Log("userMoney increased by " + increaseAmount + ". New value: " + ServerData.userMoney);
 
             // WebSocketClient를 통해 서버에 업데이트 전송
             if (webSocketClient != null)

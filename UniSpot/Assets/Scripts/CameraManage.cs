@@ -5,15 +5,26 @@ using UnityEngine.XR.ARFoundation;
 using Unity.XR.CoreUtils;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class CameraManage : MonoBehaviour
 {
     public GameObject[] monsterPrefabs; // 여러 개의 몬스터 프리팹
+    public GameObject[] monsterPrefabs1; // 몬스터 프리팹 배열 1
+    public GameObject[] monsterPrefabs2; // 몬스터 프리팹 배열 2
     private GameObject spawnedMonster; // 실제 생성된 몬스터 인스턴스
     public float spawnDistance = 2.0f; // 카메라 앞쪽으로 얼마나 떨어진 곳에 생성할지
 
     private XROrigin xrOrigin;
     private ARAnchorManager anchorManager;
+
+    // 각 배열의 선택 확률 (0~100 사이의 값)
+    [Range(0, 100)]
+    public int monsterPrefabs1Chance = 75; // monsterPrefabs1의 선택 확률 (예: 75%)
+    [Range(0, 100)]
+    public int monsterPrefabs2Chance = 25; // monsterPrefabs2의 선택 확률 (예: 25%)
+
+    public TextMeshProUGUI moneyIncreaseText; // 증가시킬 money 값을 담는 TextMeshProUGUI 컴포넌트
 
     void Start()
     {
@@ -36,6 +47,42 @@ public class CameraManage : MonoBehaviour
         {
             Debug.LogWarning("Monster has not been spawned yet.");
         }
+    }
+
+    // 가중치에 따라 랜덤으로 몬스터 프리팹 배열 선택 후 그 배열에서 랜덤 프리팹 선택
+    GameObject GetRandomMonsterPrefab()
+    {
+        // 확률에 따라 어떤 배열을 선택할지 결정
+        int randomArrayChoice = Random.Range(0, 100); // 0부터 100 사이의 랜덤 값
+
+        GameObject selectedPrefab = null;
+
+        if (randomArrayChoice < monsterPrefabs1Chance)
+        {
+            // monsterPrefabs1을 선택할 확률 (예: 75%)
+            selectedPrefab = monsterPrefabs1[Random.Range(0, monsterPrefabs1.Length)];
+            Debug.Log("Selected from monsterPrefabs1: " + selectedPrefab.name);
+
+            // moneyIncreaseText 값을 50으로 설정
+            if (moneyIncreaseText != null)
+            {
+                moneyIncreaseText.text = "50";
+            }
+        }
+        else
+        {
+            // monsterPrefabs2를 선택할 확률 (예: 25%)
+            selectedPrefab = monsterPrefabs2[Random.Range(0, monsterPrefabs2.Length)];
+            Debug.Log("Selected from monsterPrefabs2: " + selectedPrefab.name);
+
+            // moneyIncreaseText 값을 100으로 설정
+            if (moneyIncreaseText != null)
+            {
+                moneyIncreaseText.text = "100";
+            }
+        }
+
+        return selectedPrefab;
     }
 
 
@@ -63,12 +110,14 @@ public class CameraManage : MonoBehaviour
 
         if (anchor != null)
         {
-            // 랜덤한 몬스터 프리팹 선택
-            int randomIndex = Random.Range(0, monsterPrefabs.Length);
-            GameObject selectedPrefab = monsterPrefabs[randomIndex];
+            // 확률에 따라 배열 선택 및 프리팹 선택
+            GameObject selectedPrefab = GetRandomMonsterPrefab();
 
             // 몬스터 인스턴스 생성 및 저장
             spawnedMonster = Instantiate(selectedPrefab, anchor.transform.position, anchor.transform.rotation, anchor.transform);
+
+            // 프리팹의 이름을 로그로 출력
+            Debug.Log("Spawned Monster Prefab Name: " + selectedPrefab.name);
         }
     }
 
