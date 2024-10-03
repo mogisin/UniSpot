@@ -43,6 +43,7 @@ function initWebSocket() {
         } else if (data.type === 'delete_all_success') {
             logMessage('All monsters have been deleted from the database.');
             removeAllMonsterMarkers(); // 모든 마커 제거
+
         } else if (data.type === 'nearby_monsters'){
             nearbyMonsters = data.monsters;
             if (isCapturePending){
@@ -58,6 +59,11 @@ function initWebSocket() {
              else { 
                 logMessage('No Pending Request about Capture');
             } 
+
+        } else if(data.type==='res_nearby_monsters'){
+            nearbyMonsters = data.monsters;
+            logMessage('Received res_nearby_monsters');
+            // logMessage(nearbyMonsters[0].name);
 
         } else{
             logMessage('Received from server: ' + event.data);
@@ -100,6 +106,29 @@ function initWebSocket() {
             logMessage('Sent location for ' + department + ': ' + JSON.stringify(message));
         }
     };
+    window.updateLocation = function(department){
+        const departmentCoordinates = {
+            '소프트웨어융합대학': { latitude: 37.239603, longitude: 127.083157 },
+            '전자정보대학': { latitude: 37.239782, longitude: 127.083313 },
+            '응용과학대학': { latitude: 37.239811, longitude: 127.083476 },
+            '체육대학': { latitude: 37.244493, longitude: 127.080436 },
+            '공과대학': { latitude: 37.246468, longitude: 127.080844 },
+            '예술디자인대학': { latitude: 37.241709, longitude: 127.084441 },
+            '외국어대학': { latitude: 37.245391, longitude: 127.077649 },
+            '생명과학대학': { latitude: 37.242962, longitude: 127.080932 }
+        };
+        const location = departmentCoordinates[department];
+        if(location){
+            const message = {
+                type:'updateLocation',
+                username:'testUser',
+                latitude:location.latitude,
+                longitude:location.longitude
+            }
+            socket.send(JSON.stringify(message));
+            logMessage("Sent updateLocation type message");
+        }
+    };
 
     // 랜덤 몬스터 생성 요청
     window.generateMonsters = function() {
@@ -140,7 +169,11 @@ function initWebSocket() {
     window.captureNearbyMonster = function(){
         logMessage('captureNearbyMonster button clicked');
         isCapturePending = true
-        sendLocation('소프트웨어융합대학'); // 일단 소융대 주변 가까운 몬스터 포획 시도
+        // sendLocation('소프트웨어융합대학'); // 일단 소융대 주변 가까운 몬스터 포획 시도
+
+        //유저위치 업데이트 이후
+        getNearbyMonsters('testUser');
+        captureMonster(nearbyMonsters[0]);
 
         
         // const captureMessage = {
@@ -150,7 +183,15 @@ function initWebSocket() {
         // }
         // socket.send(JSON.stringify(captureMessage));
         // logMessage(`Capture : Requested to capture monster with ID: ${nearbyMonsters[0]._id}`);
-
+    }
+    window.getNearbyMonsters = function(username){
+        logMessage('Get Nearby Monster button clicked');
+        const message = {
+            type:'get_nearby_monsters',
+            username: username
+        }
+        socket.send(JSON.stringify(message));
+        logMessage('sent get_nearby_monsters type message');
 
     }
 

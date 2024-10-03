@@ -64,6 +64,14 @@ async function handleMessage(ws, message) {
         monsters: nearbyMonsters
       }));
 
+    } else if(data.type === 'updateLocation'){
+      const { username, latitude, longitude } = data;
+      let user = await User.findOne({ username });
+      user.location.latitude = latitude;
+      user.location.longitude = longitude;
+      await user.save();
+      console.log('updateLocation : 유저 위치 업데이트')
+
     } else if (data.type === 'capture') { //몬스터 잡았을 때
       const { username, monsterId } = data;
 
@@ -172,6 +180,29 @@ async function handleMessage(ws, message) {
         } else {
           console.log(`${username} already captured ${spotName}`);
         }
+
+      } else if(data.type === 'get_nearby_monsters'){
+        const { username} = data;
+        const user = await User.findOne({username});
+        const allMonsters = await Monster.find({ captured: false });
+
+        // 반경 10미터 이내의 몬스터 필터링
+        const nearbyMonsters = allMonsters.filter(monster => {
+          const distance = getDistanceFromLatLonInMeters(
+            user.location.latitude,
+            user.location.longitude,
+            monster.location.latitude,
+            monster.location.longitude
+          );
+          return distance <= 10; // 10미터 이내인지 확인
+        });
+
+        console.log('반경 10미터 이내의 주변 몬스터:', nearbyMonsters);
+        ws.send(JSON.stringify({
+          type: 'res_nearby_monsters',
+          monsters: nearbyMonsters
+        }));
+
       } else if(data.type === 'nearby_monsters'){
         const { username, latitude, longitude } = data;
         const allMonsters = await Monster.find({ captured: false });
@@ -194,12 +225,6 @@ async function handleMessage(ws, message) {
         }));
         
       }
-  
-  
-
-
-
-
 
   } catch (error) {
     console.error('Error processing message:', error);
