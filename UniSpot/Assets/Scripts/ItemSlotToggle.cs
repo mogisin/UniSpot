@@ -29,8 +29,4 @@ public class ItemSlotToggle : MonoBehaviour
         itemSlotAnimator.SetBool("isExpanded", isExpanded);
     }
 
-    public void UI_Anim_ItemSlot_Expanded()
-    {
-
-    }
 }

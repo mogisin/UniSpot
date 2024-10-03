@@ -19,6 +19,9 @@ public class MonsterGaugeInteraction : MonoBehaviour
     public RectTransform frameCenter; // Frame_Center의 RectTransform
     private Rect frameRect;
 
+    public GameObject slot1; // 슬롯 1 오브젝트
+    public GameObject slot2; // 슬롯 2 오브젝트
+
     void Start()
     {
         // Frame_Center의 RectTransform을 스크린 좌표로 변환
@@ -138,4 +141,21 @@ public class MonsterGaugeInteraction : MonoBehaviour
             resultSuccess.SetActive(true);
         }
     }
+
+    // 슬롯 1 클릭 시 게이지 감소 수치 감소
+    public void OnSlot1Clicked()
+    {
+        // 게이지 감소 속도 10% 감소
+        fillDecreaseSpeed *= 0.9f;
+        Debug.Log("Slot 1 clicked: Gauge decrease speed reduced by 10%.");
+    }
+
+    // 슬롯 2 클릭 시 게이지 증가 수치 증가
+    public void OnSlot2Clicked()
+    {
+        // 게이지 증가량 10% 증가
+        fixedIncreaseAmount *= 1.1f;
+        Debug.Log("Slot 2 clicked: Gauge increase amount increased by 10%.");
+    }
+
 }

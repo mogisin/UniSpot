@@ -422,6 +422,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5864298770180197897, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_Name
+      value: Bt_ItemSlot1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5864298770180197897, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5882772254923247359, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_Name
+      value: Bt_ItemSlot2
+      objectReference: {fileID: 0}
     - target: {fileID: 5970095665167005464, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_Controller
       value: 
@@ -449,6 +461,62 @@ PrefabInstance:
     - target: {fileID: 6661991338567726698, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6736971214835855217, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6736971214835855217, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6736971214835855217, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1717701268}
+    - target: {fileID: 6736971214835855217, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6736971214835855217, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSlot2Clicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 6736971214835855217, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MonsterGaugeInteraction, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6736971214835855217, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6755229272609271687, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6755229272609271687, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6755229272609271687, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1717701268}
+    - target: {fileID: 6755229272609271687, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6755229272609271687, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSlot1Clicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 6755229272609271687, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MonsterGaugeInteraction, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6755229272609271687, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7160411806924433154, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -1333,6 +1401,8 @@ MonoBehaviour:
   resultSuccess: {fileID: 293603016}
   resultFailed: {fileID: 1620940305}
   frameCenter: {fileID: 570941369}
+  slot1: {fileID: 1987413427}
+  slot2: {fileID: 1843817262}
 --- !u!114 &1717701269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1381,7 +1451,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1462,7 +1532,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717701267}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c67f16c55a14974d9a8ff098ed8e60e, type: 3}
   m_Name: 
@@ -1473,6 +1543,11 @@ MonoBehaviour:
 --- !u!1 &1765324853 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3189049252521688168, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+  m_PrefabInstance: {fileID: 551225668}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1843817262 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5882772254923247359, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
   m_PrefabInstance: {fileID: 551225668}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1973743088
@@ -1535,6 +1610,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1987413427 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5864298770180197897, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
+  m_PrefabInstance: {fileID: 551225668}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
