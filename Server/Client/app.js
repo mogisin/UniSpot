@@ -34,9 +34,9 @@ function initWebSocket() {
                         monsterId: randomMonster._id
                     };
                     socket.send(JSON.stringify(captureMessage));
-                    logMessage(`Requested to capture monster with ID: ${randomMonster._id}`);
+                    logMessage(`get_all_monsters: Requested to capture monster with ID: ${randomMonster._id}`);
                 } else {
-                    logMessage('No monsters available to capture.');
+                    logMessage('get_all_monsters: No monsters available to capture.');
                 }
                 isCapturePending = false; // 캡처 완료 후 플래그 초기화
             }
@@ -67,7 +67,7 @@ function initWebSocket() {
 
         } else if(data.type === 'res_user_money'){
             const {money} = data;
-            logMessage(`현재 유저 money : ${money}`);
+            logMessage(`res_user_money: 현재 유저 money : ${money}`);
         }
         else{
             logMessage('Received from server: ' + event.data);
@@ -161,10 +161,10 @@ function initWebSocket() {
         socket.send(JSON.stringify(message));
         logMessage('Requested to delete all monsters.');
     };
-    window.getUserMoney = function(){
+    window.getUserMoney = function(username){
         const message = {
             type: 'get_user_money',
-            username:'testUser'
+            username:username
         }
         socket.send(JSON.stringify(message));
         logMessage('get_user_money : 유저 money 데이터 요청 보냄')
@@ -178,13 +178,13 @@ function initWebSocket() {
     };
     
     //가까운 랜덤 몬스터 포획 요청
-    window.captureNearbyMonster = function(){
+    window.captureNearbyMonster = function(username){
         logMessage('captureNearbyMonster button clicked');
         isCapturePending = true
         // sendLocation('소프트웨어융합대학'); // 일단 소융대 주변 가까운 몬스터 포획 시도
 
         //유저위치 업데이트 이후
-        getNearbyMonsters('testUser');
+        getNearbyMonsters(username);
         captureMonster(nearbyMonsters[0]);
 
         

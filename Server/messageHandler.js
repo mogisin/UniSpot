@@ -67,6 +67,7 @@ async function handleMessage(ws, message) {
     } else if(data.type === 'updateLocation'){
       const { username, latitude, longitude } = data;
       let user = await User.findOne({ username });
+      
       user.location.latitude = latitude;
       user.location.longitude = longitude;
       await user.save();
@@ -178,6 +179,11 @@ async function handleMessage(ws, message) {
             await user.save();
 
             console.log(`${username} captured ${spotName}`);
+            ws.send(JSON.stringify({
+              type:"capture_spot_success",
+              spotName:spotName,
+              username:username
+            }))
           } else {
             console.log(`${username} does not have enough points to capture ${spotName}`);
           }

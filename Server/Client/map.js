@@ -28,7 +28,8 @@ window.initMap = function() {
         const marker = new google.maps.Marker({
             position: { lat: coordinates.latitude, lng: coordinates.longitude },
             label: department,
-            map: map
+            map: map,
+            // icon: './icon.png'
         });
         bounds.extend(marker.position);
     });
@@ -42,7 +43,11 @@ window.initMap = function() {
             const marker = new google.maps.Marker({
                 position: { lat: latitude, lng: longitude },
                 label: monsterName,
-                map: map
+                map: map,
+                // icon: {
+                //     url: 'icon.png',  // 아이콘 이미지 경로
+                //     scaledSize: new google.maps.Size(32, 32)  // 아이콘 크기 조정 (가로 32px, 세로 32px)
+                // }
             });
             monsterMarkers[monsterId] = marker;  // 마커 저장
         }
