@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 8940771151719679438}
   - component: {fileID: 4585482149354716789}
   - component: {fileID: -927008827595107058}
+  - component: {fileID: -3035816596712725903}
   m_Layer: 0
   m_Name: Applied_Sciences_1
   m_TagString: Untagged
@@ -188,6 +189,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 104cd200bafa5cf4e8962211443aeb9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3035816596712725903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3040541675164758280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aeb81ecdea47fd4dbb86cd74825a668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3432116755743016334

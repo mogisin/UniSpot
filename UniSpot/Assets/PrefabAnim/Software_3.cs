@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Software_3 : MonoBehaviour
 {
+    
     public void Software_3_anim()
     {
         // 애니메이션 이벤트에서 실행하려는 로직

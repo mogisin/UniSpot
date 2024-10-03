@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 388713457008955685}
   - component: {fileID: 5633426230552924140}
   - component: {fileID: -3190593836308830090}
+  - component: {fileID: 2089084391444727817}
   m_Layer: 0
   m_Name: Electronics&Information_2
   m_TagString: Untagged
@@ -273,6 +274,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3dcb76030b983194dbcaf4b8c4293aa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2089084391444727817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3229299873849011109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aeb81ecdea47fd4dbb86cd74825a668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4031524580577229876

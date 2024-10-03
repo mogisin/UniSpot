@@ -9,6 +9,9 @@ using TMPro;
 
 public class CameraManage : MonoBehaviour
 {
+    // MonsterGaugeInteraction 스크립트 참조
+    public MonsterGaugeInteraction monsterGaugeInteraction;
+
     public GameObject[] monsterPrefabs; // 여러 개의 몬스터 프리팹
     public GameObject[] monsterPrefabs1; // 몬스터 프리팹 배열 1
     public GameObject[] monsterPrefabs2; // 몬스터 프리팹 배열 2
@@ -68,6 +71,12 @@ public class CameraManage : MonoBehaviour
             {
                 moneyIncreaseText.text = "50";
             }
+
+            // fillDecreaseSpeed 값을 0.1로 설정
+            if (monsterGaugeInteraction != null)
+            {
+                monsterGaugeInteraction.fillDecreaseSpeed = 0.1f;
+            }
         }
         else
         {
@@ -80,6 +89,14 @@ public class CameraManage : MonoBehaviour
             {
                 moneyIncreaseText.text = "100";
             }
+
+            // fillDecreaseSpeed 값을 0.2로 설정
+            if (monsterGaugeInteraction != null)
+            {
+                monsterGaugeInteraction.fillDecreaseSpeed = 0.2f;
+                Debug.Log("속도가 변경");
+            }
+
         }
 
         return selectedPrefab;

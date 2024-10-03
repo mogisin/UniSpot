@@ -396,6 +396,7 @@ GameObject:
   - component: {fileID: 7622683345350292140}
   - component: {fileID: 2699145123822133470}
   - component: {fileID: -1444646784804394128}
+  - component: {fileID: 4774523871047354981}
   m_Layer: 0
   m_Name: Life_Sciences_3
   m_TagString: Untagged
@@ -451,5 +452,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d7e5b6708fed904c82d519d2accf619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4774523871047354981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8880699294670167413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aeb81ecdea47fd4dbb86cd74825a668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Physical_Education_3 : MonoBehaviour
 {
+    
     public void Physical_Education_3_anim()
     {
         // 애니메이션 이벤트에서 실행하려는 로직

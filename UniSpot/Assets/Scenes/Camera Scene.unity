@@ -1428,6 +1428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf5e35de19b679641a445b83ba35a3e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterGaugeInteraction: {fileID: 1717701268}
   monsterPrefabs:
   - {fileID: 3040541675164758280, guid: 2b914a989402eaf45a851574ebdf44e9, type: 3}
   - {fileID: 555117718764845850, guid: c78799f051090d84283aa0e7ee639110, type: 3}

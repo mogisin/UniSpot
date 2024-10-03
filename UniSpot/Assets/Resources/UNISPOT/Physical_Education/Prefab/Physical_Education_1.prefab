@@ -826,6 +826,7 @@ GameObject:
   - component: {fileID: 8520588826554670224}
   - component: {fileID: 6164701820439340441}
   - component: {fileID: 2578486465449203242}
+  - component: {fileID: -5574767364864176979}
   m_Layer: 0
   m_Name: Physical_Education_1
   m_TagString: Untagged
@@ -882,6 +883,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6de6440b85122e043ba18255be0e38c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5574767364864176979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5938437854398875684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aeb81ecdea47fd4dbb86cd74825a668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6001502225763060775
