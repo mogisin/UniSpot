@@ -177,17 +177,63 @@ public class MonsterGaugeInteraction : MonoBehaviour
     // 슬롯 1 클릭 시 게이지 감소 수치 감소
     public void OnSlot1Clicked()
     {
-        // 게이지 감소 속도 10% 감소
-        fillDecreaseSpeed *= 0.9f;
-        Debug.Log("Slot 1 clicked: Gauge decrease speed reduced by 10%.");
+        // 현재 money가 100 이상일 때
+        if (ServerData.userMoney >= 100)
+        {
+            // 100 소모
+            ServerData.userMoney -= 100;
+
+            // WebSocketClient를 통해 서버에 업데이트 전송
+            if (webSocketClient != null)
+            {
+                webSocketClient.SendUpdateUserMoneyMessage(ServerData.userMoney);
+            }
+            else
+            {
+                Debug.LogWarning("WebSocketClient reference is not set.");
+            }
+
+            Debug.Log("Slot 2 clicked: 100 money consumed. New money: " + ServerData.userMoney);
+
+            // 게이지 증가량 10% 증가
+            fixedIncreaseAmount *= 1.1f;
+            Debug.Log("Gauge increase amount increased by 10%.");
+        }
+        else
+        {
+            Debug.LogWarning("Not enough money to use Slot 2.");
+        }
     }
 
     // 슬롯 2 클릭 시 게이지 증가 수치 증가
     public void OnSlot2Clicked()
     {
-        // 게이지 증가량 10% 증가
-        fixedIncreaseAmount *= 1.1f;
-        Debug.Log("Slot 2 clicked: Gauge increase amount increased by 10%.");
+        // 현재 money가 150 이상일 때
+        if (ServerData.userMoney >= 150)
+        {
+            // 150 소모
+            ServerData.userMoney -= 150;
+
+            // WebSocketClient를 통해 서버에 업데이트 전송
+            if (webSocketClient != null)
+            {
+                webSocketClient.SendUpdateUserMoneyMessage(ServerData.userMoney);
+            }
+            else
+            {
+                Debug.LogWarning("WebSocketClient reference is not set.");
+            }
+
+            Debug.Log("Slot 2 clicked: 150 money consumed. New money: " + ServerData.userMoney);
+
+            // 게이지 증가량 10% 증가
+            fixedIncreaseAmount *= 1.1f;
+            Debug.Log("Gauge increase amount increased by 10%.");
+        }
+        else
+        {
+            Debug.LogWarning("Not enough money to use Slot 2.");
+        }
     }
 
 }
