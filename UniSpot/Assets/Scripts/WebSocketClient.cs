@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 public class WebSocketClient : MonoBehaviour
 {
     private ClientWebSocket webSocket;
-
+    public TextMeshProUGUI useridname;
 
     async void Start()
     {
@@ -24,7 +24,7 @@ public class WebSocketClient : MonoBehaviour
         Debug.Log("WebSocket connected!");
 
         // 메시지 전송
-        SendGetUserMoneyMessage("testUser");
+        SendGetUserMoneyMessage($"testUser");
 
         // 서버 응답을 대기하는 비동기 함수 호출
         await ReceiveMessagesAsync();
@@ -64,38 +64,58 @@ public class WebSocketClient : MonoBehaviour
                 Debug.Log("Received: " + message);
 
                 // JSON 메시지 파싱
-                MoneyResponse response = JsonUtility.FromJson<MoneyResponse>(message);
+                MessageResponse response = JsonUtility.FromJson<MessageResponse>(message);
 
-                // 수신된 money 값을 ServerData에 저장
-                ServerData.userMoney = response.money; // 수정된 부분: 수신된 값을 저장
-
-                // "money" 값을 TextMeshProUGUI에 표시
-                if (moneyText != null)
-                {   
-                    moneyText.text = $"{ServerData.userMoney}";
-                }
-
-                // "money" 값을 두 번째 TextMeshProUGUI에도 표시
-                if (moneyText2 != null)
+                // "type" 필드를 확인하여 메시지 타입을 구분
+                if (response.type == "res_user_money")
                 {
-                    moneyText2.text = $"{ServerData.userMoney}";
-                }
+                    // 수신된 money 값을 ServerData에 저장
+                    ServerData.userMoney = response.money;  // 수신된 값을 저장
+                    Debug.Log("User money: " + ServerData.userMoney);
 
-                // GameObject에 특정 동작을 할당
-                if (someGameObject != null)
+                    // "money" 값을 TextMeshProUGUI에 표시
+                    if (moneyText != null)
+                    {
+                        moneyText.text = $"{ServerData.userMoney}";
+                    }
+
+                    if (moneyText2 != null)
+                    {
+                        moneyText2.text = $"{ServerData.userMoney}";
+                    }
+
+                    // GameObject에 특정 동작을 할당
+                    if (someGameObject != null)
+                    {
+                        if (response.money > 1000)
+                        {
+                            someGameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            someGameObject.SetActive(false);
+                        }
+                    }
+                }
+                else if (response.type == "res_duplicate_money")
                 {
-                    // 예시로 GameObject를 활성화 또는 비활성화
-                    if (response.money > 1000)
-                    {
-                        someGameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        someGameObject.SetActive(false);
-                    }
+                    Debug.Log("Duplicate money response received.");
+                    // 중복된 money 응답에 대해 다른 처리
+                }
+                else
+                {
+                    Debug.Log("Unknown message type: " + response.type);
                 }
             }
         }
+    }
+
+    // 메시지에 대한 클래스 정의
+    [System.Serializable]
+    public class MessageResponse
+    {
+        public string type;  // 메시지의 타입 필드
+        public int money;    // 메시지의 money 필드
     }
 
     // WebSocket 연결 닫기
@@ -144,6 +164,48 @@ public class WebSocketClient : MonoBehaviour
         await webSocket.SendAsync(new ArraySegment<byte>(bytesToSend), WebSocketMessageType.Text, true, CancellationToken.None);
 
         Debug.Log("Sent monster name to server: " + message);
+    }
+
+    // 서버에 유저 이름 업데이트 메시지 보내기
+    public async void SendUsernameUpdateMessage(string newUsername)
+    {
+        // JSON 형식으로 메시지 작성
+        string message = $@"
+    {{
+        ""type"": ""update_username"",
+        ""username"": ""{newUsername}""
+    }}";
+
+        byte[] bytesToSend = Encoding.UTF8.GetBytes(message);
+
+        // 서버로 메시지 전송
+        try
+        {
+            await webSocket.SendAsync(new ArraySegment<byte>(bytesToSend), WebSocketMessageType.Text, true, CancellationToken.None);
+            Debug.Log("Sent username update to server: " + message);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Failed to send username update: " + e.Message);
+        }
+    }
+
+    // 서버에 몬스터 보유 정보 보내기
+    public void SendMonsterInfoMessage(int newMoneyValue)
+    {
+        // JSON 형식으로 메시지 작성
+        string message = $@"
+    {{
+        ""type"": ""get_duplicate_name"",
+        ""username"": ""testUser""
+    }}";
+
+        byte[] bytesToSend = Encoding.UTF8.GetBytes(message);
+
+        // 서버로 메시지 전송
+        webSocket.SendAsync(new ArraySegment<byte>(bytesToSend), WebSocketMessageType.Text, true, CancellationToken.None);
+
+        Debug.Log("Sent money update to server: " + message);
     }
 
 
