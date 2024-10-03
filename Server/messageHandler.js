@@ -172,6 +172,27 @@ async function handleMessage(ws, message) {
         } else {
           console.log(`${username} already captured ${spotName}`);
         }
+      } else if(data.type === 'nearby_monsters'){
+        const { username, latitude, longitude } = data;
+        const allMonsters = await Monster.find({ captured: false });
+
+        // 반경 10미터 이내의 몬스터 필터링
+        const nearbyMonsters = allMonsters.filter(monster => {
+          const distance = getDistanceFromLatLonInMeters(
+            latitude,
+            longitude,
+            monster.location.latitude,
+            monster.location.longitude
+          );
+          return distance <= 10; // 10미터 이내인지 확인
+        });
+
+        console.log('반경 10미터 이내의 주변 몬스터:', nearbyMonsters);
+        ws.send(JSON.stringify({
+          type: 'nearby_monsters',
+          monsters: nearbyMonsters
+        }));
+        
       }
   
   
