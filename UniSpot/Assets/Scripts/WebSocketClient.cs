@@ -18,7 +18,7 @@ public class WebSocketClient : MonoBehaviour
     {
         // WebSocket 연결 시작
         webSocket = new ClientWebSocket();
-        Uri serverUri = new Uri("ws://172.20.10.7:8000");
+        Uri serverUri = new Uri("ws://172.21.22.75:8000");
         await webSocket.ConnectAsync(serverUri, CancellationToken.None);
 
         Debug.Log("WebSocket connected!");

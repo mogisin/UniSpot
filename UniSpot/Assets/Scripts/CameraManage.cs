@@ -12,7 +12,6 @@ public class CameraManage : MonoBehaviour
     // MonsterGaugeInteraction 스크립트 참조
     public MonsterGaugeInteraction monsterGaugeInteraction;
 
-    public GameObject[] monsterPrefabs; // 여러 개의 몬스터 프리팹
     public GameObject[] monsterPrefabs1; // 몬스터 프리팹 배열 1
     public GameObject[] monsterPrefabs2; // 몬스터 프리팹 배열 2
     private GameObject spawnedMonster; // 실제 생성된 몬스터 인스턴스
