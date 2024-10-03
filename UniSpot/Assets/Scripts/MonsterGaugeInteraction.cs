@@ -39,12 +39,20 @@ public class MonsterGaugeInteraction : MonoBehaviour
         {
             Vector3 touchPosition = Input.mousePosition;
 
-            // 터치 위치가 Frame_Center 안에 있는지 확인
-            if (frameRect.Contains(touchPosition))
-            {
-                IncreaseGaugeFixedAmount();
-            }
+            // 터치 이벤트 발생
+            HandleTouch(touchPosition);
         }
+    }
+
+    // 터치 이벤트 처리 메서드
+    void HandleTouch(Vector3 touchPosition)
+    {
+        // 터치 위치가 Frame_Center 안에 있는지 확인
+        if (frameRect.Contains(touchPosition))
+        {
+            IncreaseGaugeFixedAmount();
+        }
+        // Frame 영역 밖에서도 터치 이벤트가 발생하지만 게이지에 영향을 주지 않음
     }
 
     // 게이지 감소 시작 (딜레이 포함)
