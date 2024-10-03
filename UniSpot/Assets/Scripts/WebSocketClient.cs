@@ -109,6 +109,24 @@ public class WebSocketClient : MonoBehaviour
         }
     }
 
+    // 서버에 money 값 업데이트하기
+    public void SendUpdateUserMoneyMessage(int newMoneyValue)
+    {
+        // JSON 형식으로 메시지 작성
+        string message = $@"
+    {{
+        ""type"": ""update_user_money"",
+        ""username"": ""testUser"",
+        ""money"": {newMoneyValue}
+    }}";
+
+        byte[] bytesToSend = Encoding.UTF8.GetBytes(message);
+
+        // 서버로 메시지 전송
+        webSocket.SendAsync(new ArraySegment<byte>(bytesToSend), WebSocketMessageType.Text, true, CancellationToken.None);
+
+        Debug.Log("Sent money update to server: " + message);
+    }
 
     // JSON 데이터 구조를 표현할 클래스 정의
     [System.Serializable]
@@ -124,6 +142,7 @@ public class WebSocketClient : MonoBehaviour
     public TextMeshProUGUI moneyText2;
     public GameObject someGameObject; // money 값에 따라 동작할 GameObject 필드
 
+    // 씬 이동 시 서버호출 관리
     private async void OnDisable()
     {
         // WebSocket 연결이 존재하고 열려 있는지 확인
@@ -134,5 +153,7 @@ public class WebSocketClient : MonoBehaviour
             Debug.Log("WebSocket closed due to scene change.");
         }
     }
+
+
 
 }

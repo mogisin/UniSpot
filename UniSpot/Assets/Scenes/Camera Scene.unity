@@ -428,7 +428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5864298770180197897, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5882772254923247359, guid: 02c4694183418b64cbcb1d15cad73f9f, type: 3}
       propertyPath: m_Name
@@ -1396,13 +1396,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gaugeImage: {fileID: 551225670}
   fixedIncreaseAmount: 0.05
-  fillDecreaseSpeed: 0
+  fillDecreaseSpeed: 0.1
   delayBeforeDecrease: 1
   resultSuccess: {fileID: 293603016}
   resultFailed: {fileID: 1620940305}
   frameCenter: {fileID: 570941369}
   slot1: {fileID: 1987413427}
   slot2: {fileID: 1843817262}
+  webSocketClient: {fileID: 1717701276}
 --- !u!114 &1717701269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1532,7 +1533,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717701267}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c67f16c55a14974d9a8ff098ed8e60e, type: 3}
   m_Name: 

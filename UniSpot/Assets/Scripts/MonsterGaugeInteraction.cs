@@ -22,6 +22,8 @@ public class MonsterGaugeInteraction : MonoBehaviour
     public GameObject slot1; // 슬롯 1 오브젝트
     public GameObject slot2; // 슬롯 2 오브젝트
 
+    public WebSocketClient webSocketClient; // WebSocketClient의 인스턴스를 참조할 변수
+
     void Start()
     {
         // Frame_Center의 RectTransform을 스크린 좌표로 변환
@@ -115,6 +117,20 @@ public class MonsterGaugeInteraction : MonoBehaviour
             // Result_Success 활성화 및 상태 플래그 설정
             resultSuccess.SetActive(true);
             resultSuccessActive = true;
+
+            // userMoney를 50 증가시킴
+            ServerData.userMoney += 50; // WebSocketClient에서 관리하는 userMoney 값 업데이트
+            Debug.Log("userMoney increased by 50. New value: " + ServerData.userMoney);
+
+            // WebSocketClient를 통해 서버에 업데이트 전송
+            if (webSocketClient != null)
+            {
+                webSocketClient.SendUpdateUserMoneyMessage(ServerData.userMoney);
+            }
+            else
+            {
+                Debug.LogWarning("WebSocketClient reference is not set.");
+            }
 
             // 5초 후에 메인 화면으로 이동
             StartCoroutine(GoToMainSceneAfterDelay(5f));
