@@ -167,7 +167,16 @@ function initWebSocket() {
             username:username
         }
         socket.send(JSON.stringify(message));
-        logMessage('get_user_money : 유저 money 데이터 요청 보냄')
+        logMessage('get_user_money : 유저 money 데이터 요청 보냄');
+    }
+    window.captureMonsterNEW = function(username){
+        const message = {
+            type: 'capture_monster',
+            username:username,
+            monsterName: 'Software_1(Clone)'
+        };
+        socket.send(JSON.stringify(message));
+        logMessage('capture_monster : 새 형식 데이터 요청 보냄');
     }
 
     // 랜덤 몬스터 포획 요청

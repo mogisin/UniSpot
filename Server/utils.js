@@ -41,9 +41,9 @@ function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
     return { newLatitude, newLongitude };
   }
   
-  async function newgenerateRandomMonsters(count = 5) { //중앙도서관 및 위치정보를 db에서 받아오도록 수정됨
+  async function newgenerateRandomMonsters(count, name = undefined) { //중앙도서관 및 위치정보를 db에서 받아오도록 수정됨
     const monsters = [];
-
+    
     // DB에서 Spot 컬렉션에서 좌표 정보를 불러옴
     const spots = await Spot.find({});
 
@@ -67,54 +67,96 @@ function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
       '예술디자인대학': '예디대',
       '외국어대학': '외대',
       '생명과학대학': '생대',
+      '국제대학': '국제대',
       '중앙도서관': '중앙도서관'
     };
-
-    for (let i = 0; i < count; i++) {
-      let randomDept = departments[Math.floor(Math.random() * departments.length)];
-      let latitude, longitude;
-      let generateSpot;
-
-      if (randomDept === '중앙도서관') {
-        // '중앙도서관'일 경우 다른 학과를 랜덤 선택 (중앙도서관 제외)
-        const otherDepartments = departments.filter(dept => dept !== '중앙도서관');
-        randomDept = otherDepartments[Math.floor(Math.random() * otherDepartments.length)];
-
-        // 위치는 중앙도서관의 좌표를 사용
-        const centralCoordinates = departmentCoordinates['중앙도서관'];
-        latitude = centralCoordinates.latitude;
-        longitude = centralCoordinates.longitude;
-
-        generateSpot = '중앙도서관';
-        
-        
-      } else {
-        // 일반적인 경우 해당 학과의 좌표를 사용
-        const deptCoordinates = departmentCoordinates[randomDept];
-        latitude = deptCoordinates.latitude;
-        longitude = deptCoordinates.longitude;
-        generateSpot = randomDept;
+    const departmentAbbreviations2 = {
+      'Software': '소프트웨어융합대학',
+      'Electronics&Information': '전자정보대학',
+      'Applied_Sciences': '응용과학대학',
+      'Physical_Education': '체육대학',
+      'Engineering': '공과대학',
+      'Art&Design': '예술디자인대학',
+      'Foreign_Language': '외국어대학',
+      'Life_Sciences': '생명과학대학',
+      'International': '국제대학'
+  };
+    if (name === undefined){
+      console.log('몬스터 이름 없음');
+      for (let i = 0; i < count; i++) {
+        let randomDept = departments[Math.floor(Math.random() * departments.length)];
+        let latitude, longitude;
+        let generateSpot;
+  
+        if (randomDept === '중앙도서관') {
+          // '중앙도서관'일 경우 다른 학과를 랜덤 선택 (중앙도서관 제외)
+          const otherDepartments = departments.filter(dept => dept !== '중앙도서관');
+          randomDept = otherDepartments[Math.floor(Math.random() * otherDepartments.length)];
+  
+          // 위치는 중앙도서관의 좌표를 사용
+          const centralCoordinates = departmentCoordinates['중앙도서관'];
+          latitude = centralCoordinates.latitude;
+          longitude = centralCoordinates.longitude;
+  
+          generateSpot = '중앙도서관';
+          
+          
+        } else {
+          // 일반적인 경우 해당 학과의 좌표를 사용
+          const deptCoordinates = departmentCoordinates[randomDept];
+          latitude = deptCoordinates.latitude;
+          longitude = deptCoordinates.longitude;
+          generateSpot = randomDept;
+        }
+  
+        // 좌표 범위 내에서 새로운 좌표 생성
+        const { newLatitude, newLongitude } = getRandomCoordinateWithinRadius(latitude, longitude);
+  
+        const monster = new Monster({
+          name: `${departmentAbbreviations[randomDept]}몬_${Math.floor(Math.random() * 1000)}`,
+          dept: randomDept,
+          generateSpot: generateSpot,
+          description: `${departmentAbbreviations[generateSpot]}에 주로 출몰함`,
+          tags: ['태그1', '태그2'],
+          location: {
+            latitude: newLatitude,
+            longitude: newLongitude
+          },
+          captured: false
+        });
+  
+        await monster.save();
+        monsters.push(monster);
       }
+    } else {
+      // 숫자 제외한 이름 추출 (예: Applied_Sciences, ArtDesign 등)
+      // 숫자와 (Clone) 제거하여 영어 단과대 이름만 추출
+      const departmentKey = name.replace(/_\d+\(Clone\)$/, '').replace(/_\d+$/, '');
+      const koreanDeptName = departmentAbbreviations2[departmentKey];  // 추출한 이름으로 한글 단과대 이름 찾기
 
-      // 좌표 범위 내에서 새로운 좌표 생성
-      const { newLatitude, newLongitude } = getRandomCoordinateWithinRadius(latitude, longitude);
-
-      const monster = new Monster({
-        name: `${departmentAbbreviations[randomDept]}몬_${Math.floor(Math.random() * 1000)}`,
-        dept: randomDept,
-        generateSpot: generateSpot,
-        description: `${departmentAbbreviations[generateSpot]}에 주로 출몰함`,
-        tags: ['태그1', '태그2'],
-        location: {
-          latitude: newLatitude,
-          longitude: newLongitude
-        },
-        captured: false
-      });
-
-      await monster.save();
-      monsters.push(monster);
-    }
+      if (koreanDeptName && departmentCoordinates[koreanDeptName]) {
+          const deptCoordinates = departmentCoordinates[koreanDeptName];
+          const { newLatitude, newLongitude } = getRandomCoordinateWithinRadius(deptCoordinates.latitude, deptCoordinates.longitude);
+  
+          const monster = new Monster({
+              name: name,
+              dept: koreanDeptName,  // 한글 단과대 이름 사용
+              generateSpot: koreanDeptName,  // 생성 위치에 단과대 이름 사용
+              description: `${departmentAbbreviations[koreanDeptName]}에 주로 출몰함`,  // 설명에 한글 단과대 이름 사용
+              tags: ['태그1', '태그2'],
+              location: {
+                  latitude: newLatitude,
+                  longitude: newLongitude  // 단과대에 맞는 좌표
+              },
+              captured: false
+          });
+          await monster.save();
+          monsters.push(monster);
+      } else {
+          console.log(`유효하지 않은 단과대 이름: ${departmentKey}`);
+      }
+  }
+    
 
     return monsters;
 }

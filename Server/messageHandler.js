@@ -236,6 +236,7 @@ async function handleMessage(ws, message) {
         }));
         
       } else if(data.type === 'get_user_money'){
+        console.log(data);
         const{username} = data;
         const user = await User.findOne({username});
         const message = {
@@ -244,8 +245,45 @@ async function handleMessage(ws, message) {
           money: user.money
         }
         ws.send(JSON.stringify(message));
-        console.log(`res_user_money : 유저 money 데이터 반환 : ${user.money}`);
-      }
+        console.log(`res_user_money : 유저 money 데이터 : ${user.money}`);
+
+      } else if(data.type === 'update_user_money'){
+        console.log(data)
+        const {username, money} = data;
+        let user = await User.findOne({username});
+
+        user.money = money;
+        await user.save();
+        console.log(`현재 유저 money : ${user.money}`);
+
+      } else if (data.type === 'capture_monster') {
+        console.log(data);
+        const { username, monsterName } = data;
+    
+        // 유저 정보 조회
+        let user = await User.findOne({ username });
+        
+        // 새로운 몬스터 생성 (아마 배열로 반환될 가능성 있음, 확인 필요)
+        const newMonsters = await newgenerateRandomMonsters(1, monsterName);
+        const newMonster = newMonsters[0]; // 첫 번째 몬스터 선택
+        // console.log(newMonster);
+    
+        if (newMonster) {
+            console.log(`생성된 몬스터 : ${newMonster.name}, ${newMonster._id}`);
+    
+            // 유저의 몬스터 목록에 추가
+            user.monsters.push({ 
+                name: newMonster.name, 
+                capturedAt: new Date(),
+                monsterId: newMonster._id
+            });
+            await user.save();
+        } else {
+            console.error('새로 생성된 몬스터를 찾을 수 없습니다.');
+        }
+    }
+    
+
 
   } catch (error) {
     console.error('Error processing message:', error);
