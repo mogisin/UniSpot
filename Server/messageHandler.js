@@ -111,9 +111,9 @@ async function handleMessage(ws, message) {
         type:'get_all_monsters',
         monsters:allMonsters
       };
-      console.log('모든 몬스터 출력 시작')
+      // console.log('모든 몬스터 출력 시작')
       // console.log(allMonsters)
-      console.log('모든 몬스터 출력 종료')
+      // console.log('모든 몬스터 출력 종료')
       ws.send(JSON.stringify(response))
     }
 
@@ -236,16 +236,29 @@ async function handleMessage(ws, message) {
         }));
         
       } else if(data.type === 'get_user_money'){
-        console.log(data);
+        // console.log(data);
         const{username} = data;
-        const user = await User.findOne({username});
+        let user = await User.findOne({username});
+        // console.log(username);
+        // 유저의 위치 정보 업데이트
+        if (!user) {
+          user = new User({ 
+            username,
+            money: 0, 
+            location: { latitude:11, longitude:11 } });
+          console.log('새로운 유저 생성:');
+        } 
+        await user.save();
+        // console.log('유저 저장 완료:');
+
+
         const message = {
           type:'res_user_money',
           username: user.username,
           money: user.money
         }
         ws.send(JSON.stringify(message));
-        console.log(`res_user_money : 유저 money 데이터 : ${user.money}`);
+        console.log(`res_user_money : money : ${user.money}`);
 
       } else if(data.type === 'update_user_money'){
         console.log(data)
@@ -267,9 +280,9 @@ async function handleMessage(ws, message) {
         const newMonsters = await newgenerateRandomMonsters(1, monsterName);
         const newMonster = newMonsters[0]; // 첫 번째 몬스터 선택
         // console.log(newMonster);
-    
+        
         if (newMonster) {
-            console.log(`생성된 몬스터 : ${newMonster.name}, ${newMonster._id}`);
+            console.log(`생성된/포획된 몬스터 : ${newMonster.name}, ${newMonster._id}`);
     
             // 유저의 몬스터 목록에 추가
             user.monsters.push({ 
@@ -281,6 +294,54 @@ async function handleMessage(ws, message) {
         } else {
             console.error('새로 생성된 몬스터를 찾을 수 없습니다.');
         }
+    } else if (data.type === 'get_duplicate_name'){
+      console.log(data.username);
+  try {
+    // 해당 유저의 몬스터 목록을 가져옴
+    const user = await User.findOne({ username: data.username });
+
+    if (!user) {
+      console.log('유저를 찾을 수 없습니다.');
+      return;
+    }
+
+    // 유저가 소유한 몬스터 목록에서 중복된 이름 확인
+    const monsterNames = await User.aggregate([
+      {
+        $match: { username: data.username }  // 해당 유저의 데이터만 선택
+      },
+      {
+        // monsters 배열을 펼쳐서 각 몬스터 객체를 도큐먼트로 취급
+        $unwind: "$monsters"
+      },
+      {
+        // name 필드로 그룹화
+        $group: {
+          _id: "$monsters.name",  // 그룹화 기준: monsters 배열의 name 필드
+          count: { $sum: 1 }  // 해당 이름을 가진 몬스터 수 계산
+        }
+      },
+      {
+        // 모든 결과를 출력 (중복이 없더라도 포함)
+        $project: {
+          _id: 0,  // _id 필드 숨기기
+          name: "$_id",  // name 필드에 _id 값 할당
+          count: 1  // count 필드 유지
+        }
+      }
+    ]);
+
+    const message = {
+      type: 'res_user_monster_names',
+      monsters: monsterNames
+    };
+
+    ws.send(JSON.stringify(message));
+
+    console.log('유저가 보유한 몬스터 이름 및 개수:', monsterNames);
+  } catch (err) {
+    console.error('중복 확인 오류 발생:', err);
+  }
     }
     
 

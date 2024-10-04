@@ -22,7 +22,7 @@ if (!mongoURI) {
 //   '생명과학대학': { latitude: 37.242962, longitude: 127.080932 }
 // };
 const spotsData = {
-  '중앙도서관': {latitude:37.241047, longitude:127.079659 }
+  '국제대학': {latitude:37.239885, longitude:127.081358 }
 };
 
 // 비동기 함수로 데이터 삽입

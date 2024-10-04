@@ -178,6 +178,14 @@ function initWebSocket() {
         socket.send(JSON.stringify(message));
         logMessage('capture_monster : 새 형식 데이터 요청 보냄');
     }
+    window.getDuplicateName = function(username){
+        const message = {
+            type:'get_duplicate_name',
+            username:username
+        };
+        socket.send(JSON.stringify(message));
+        logMessage('get_duplicated_name : 중복 몬스터 개수 확인 요청')
+    }
 
     // 랜덤 몬스터 포획 요청
     window.captureAnyMonster = function() {

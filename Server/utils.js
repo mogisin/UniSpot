@@ -131,7 +131,11 @@ function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
     } else {
       // 숫자 제외한 이름 추출 (예: Applied_Sciences, ArtDesign 등)
       // 숫자와 (Clone) 제거하여 영어 단과대 이름만 추출
+      // 숫자와 (Clone) 제거하여 영어 단과대 이름 추출
+      // const numberMatch = name.match(/\d+/);  // 숫자를 추출 (예: 1)
+      // const monsterNumber = numberMatch ? numberMatch[0] : null;  // 추출된 숫자를 저장
       const departmentKey = name.replace(/_\d+\(Clone\)$/, '').replace(/_\d+$/, '');
+
       const koreanDeptName = departmentAbbreviations2[departmentKey];  // 추출한 이름으로 한글 단과대 이름 찾기
 
       if (koreanDeptName && departmentCoordinates[koreanDeptName]) {
@@ -148,7 +152,7 @@ function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
                   latitude: newLatitude,
                   longitude: newLongitude  // 단과대에 맞는 좌표
               },
-              captured: false
+              captured: true
           });
           await monster.save();
           monsters.push(monster);
