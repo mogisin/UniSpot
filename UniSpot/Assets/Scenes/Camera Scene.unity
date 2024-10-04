@@ -1174,7 +1174,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1429,30 +1429,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterGaugeInteraction: {fileID: 1717701268}
-  monsterPrefabs:
-  - {fileID: 3040541675164758280, guid: 2b914a989402eaf45a851574ebdf44e9, type: 3}
-  - {fileID: 555117718764845850, guid: c78799f051090d84283aa0e7ee639110, type: 3}
-  - {fileID: 8356317438941835536, guid: 220421be52bc073439d253c4abfb505b, type: 3}
-  - {fileID: 8645504429318352872, guid: 7498ecf44c6e126429c6146821aaa0a0, type: 3}
-  - {fileID: 4079517648322257185, guid: 1d4da28699ba2194bb9c2deb0284cfec, type: 3}
-  - {fileID: 2571745157661008036, guid: 897ac612608ce2d48b29d5e4ed4744d2, type: 3}
-  - {fileID: 1166555249685945832, guid: 04c079de3509b604a86002bac42e5f64, type: 3}
-  - {fileID: 3322458044969760855, guid: fefbb8b392bf8264c8118f82e3419328, type: 3}
-  - {fileID: 1218739316016321694, guid: fd44e59a0db6dec4f9fee9f078c2a79b, type: 3}
-  - {fileID: 5938437854398875684, guid: 1dee00dbc6a7a0f41bb49b6b369bae52, type: 3}
-  - {fileID: 5027573752803003902, guid: 4b5a8ab5121328f4bb9dad4b53ce8512, type: 3}
-  - {fileID: 8216170357933623021, guid: add4db707d497c348bf7c2110b70da7d, type: 3}
-  - {fileID: 7891585882738831387, guid: ec36e7a8c60f5324daa3cd4ca9a140ae, type: 3}
-  - {fileID: 7091182468079312836, guid: 15024b07de105e64f8dd773f19709f2b, type: 3}
-  - {fileID: 8880699294670167413, guid: 46c88194ac7d0d44d8a02bf9b175d887, type: 3}
-  - {fileID: 2055920187531127949, guid: e92c94071c7e0624196ee7fdc092eaf7, type: 3}
-  - {fileID: 546501880792544740, guid: 5a265f034eacb8e44a3b517d829db34c, type: 3}
-  - {fileID: 7236063695810868796, guid: da7836623565e0e4f89b8a531256edd6, type: 3}
-  - {fileID: 7855488558329097101, guid: 19cf0bff5dca6d14485c570eb06cf0d6, type: 3}
-  - {fileID: 8915591591125752959, guid: 76af6a8964e6efd4b8b84727ea17a5be, type: 3}
-  - {fileID: 8578084863603980149, guid: dc865c97b3dcdea4192010055f7f1c8c, type: 3}
-  - {fileID: 16295034818412614, guid: 2350fc4e529eb1548b2116bf499798b3, type: 3}
-  - {fileID: 3229299873849011109, guid: 96947d5e43f47ac429ed4453d972cd02, type: 3}
   monsterPrefabs1:
   - {fileID: 1166555249685945832, guid: 04c079de3509b604a86002bac42e5f64, type: 3}
   - {fileID: 3322458044969760855, guid: fefbb8b392bf8264c8118f82e3419328, type: 3}
@@ -1579,6 +1555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c67f16c55a14974d9a8ff098ed8e60e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useridname: {fileID: 0}
   moneyText: {fileID: 849778925}
   moneyText2: {fileID: 0}
   someGameObject: {fileID: 0}
